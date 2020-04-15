@@ -1,0 +1,15 @@
+{
+  "name": "Woofer",
+  "version": "1.0.0",
+  "description": "A tweeter like app created with React and Node",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Me",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.9"
+  }
+}
