@@ -1,9 +1,11 @@
 import React from 'react';
-
+import Login from "./components/auth/Login.jsx"
+import SignUp from "./components/auth/SignUp.jsx"
 function App() {
   return (
     <div>
-      <h1>Hello world</h1>
+      <Login/>
+      <SignUp/>
     </div>
   );
 }
