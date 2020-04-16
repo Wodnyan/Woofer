@@ -19,16 +19,15 @@ export default class Input extends React.Component{
   }
   async handleSubmit(e, url){
     e.preventDefault();
-    console.log(url);
-    // const post = await fetch(url,{
-    //   method: "POST",
-    //   header: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify(this.state)
-    // })
-    // const resp = post.json();
-    // console.log(resp);
+    const post = await fetch(url,{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(this.state)
+    })
+    const resp = await post.json();
+    console.log(resp);
   }
   render(){
     const {title, url} = this.props
