@@ -46,20 +46,30 @@ export default class Input extends React.Component{
       })
     }
     else{
+      this.setState({
+        error: ""
+      })
       console.log(resp);
     }
   }
   render(){
-    const {title, url} = this.props
+    const {title, url} = this.props;
+    const {username, password, error} = this.state
     return(
     <>
-    <h1>
-      {title}
-    </h1>
+      <h1>
+        {title}
+      </h1>
       <form onSubmit={(e)=>{this.handleSubmit(e, url)}}>
-        <h1 style={{color: "red"}}>{this.state.error}</h1>
-        <input type="text" name="username" onChange={this.handleInputChange} value={this.state.username}></input>
-        <input type="password" name="password" onChange={this.handleInputChange} value={this.state.password}></input>
+          {error && <h1 style={{color: "red"}}>{this.state.error}</h1>}
+        <label>
+          Username
+          <input type="text" name="username" onChange={this.handleInputChange} value={username}></input>
+        </label>
+        <label>
+          Password
+          <input type="password" name="password" onChange={this.handleInputChange} value={password}></input>
+        </label>
         <button type="submit">{title}</button>
       </form>
     </>
