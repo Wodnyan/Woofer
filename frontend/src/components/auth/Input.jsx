@@ -40,9 +40,14 @@ export default class Input extends React.Component{
       body: JSON.stringify(user)
     })
     const resp = await post.json();
-    this.setState({
-      error: resp.error
-    })
+    if(resp.error){
+      this.setState({
+        error: resp.error
+      })
+    }
+    else{
+      console.log(resp);
+    }
   }
   render(){
     const {title, url} = this.props
