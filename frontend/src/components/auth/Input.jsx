@@ -1,5 +1,6 @@
 import React from "react";
 import style from "./styles/Input.scss"
+import {Link} from "react-router-dom";
 class User{
   constructor(un, pw){
     this.username = un;
@@ -73,8 +74,9 @@ export default class Input extends React.Component{
         {error && <h1 className="input-error-msg">{this.state.error}</h1>}
         <button type="submit" className="submit-btn">{title}</button>
       </form>
-      {title === "Login" ? <p className="usr-q">Not a member? <a href="#">Sign up now!</a></p> : <p className="usr-q">Already have an account? <a href="#">Login now!</a></p>}
+      {title === "Login" ? <p className="usr-q">Not a member? <Link to="./sign-up">Sign up now</Link></p> : <p className="usr-q">Already have an account? <Link to="./login">Login now</Link></p>}
     </div>
   )
+  // <a href="http://localhost:3001/account/login">Login now!</a>
   }
 }
