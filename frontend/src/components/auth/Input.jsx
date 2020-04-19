@@ -1,4 +1,5 @@
 import React from "react";
+import style from "./styles/Input.scss"
 class User{
   constructor(un, pw){
     this.username = un;
@@ -56,23 +57,24 @@ export default class Input extends React.Component{
     const {title, url} = this.props;
     const {username, password, error} = this.state
     return(
-    <>
-      <h1>
-        {title}
+    <div className="input-container">
+      <h1 className="input-title">
+      🐶{title}🐶
       </h1>
       <form onSubmit={(e)=>{this.handleSubmit(e, url)}}>
-          {error && <h1 style={{color: "red"}}>{this.state.error}</h1>}
         <label>
-          Username
-          <input type="text" name="username" onChange={this.handleInputChange} value={username}></input>
+          <p className="input-header">Username</p>
+          <input className="input input--username" type="text" name="username" onChange={this.handleInputChange} value={username}></input>
         </label>
         <label>
-          Password
-          <input type="password" name="password" onChange={this.handleInputChange} value={password}></input>
+          <p className="input-header">Password</p>
+          <input className="input input--password" type="password" name="password" onChange={this.handleInputChange} value={password}></input>
         </label>
-        <button type="submit">{title}</button>
+        {error && <h1 className="input-error-msg">{this.state.error}</h1>}
+        <button type="submit" className="submit-btn">{title}</button>
       </form>
-    </>
+      {title === "Login" ? <p className="usr-q">Not a member? <a href="#">Sign up now!</a></p> : <p className="usr-q">Already have an account? <a href="#">Login now!</a></p>}
+    </div>
   )
   }
 }
