@@ -21,15 +21,25 @@ module.exports = (app)=>{
   app.post("/user/login", (req,res)=>{
       const {username, password} = req.body;
       User.findOne({username: username}, async (err, data)=>{
-        if(err) console.log("Foo");
+        if(err) console.log("Foo")
         else if(data){
-          const passIsCorrect = await compare(password, data.password);
-          res.json(req.body);
-        }
-        else{
-          console.log("No such username");
-          res.json({error: "No such username"})
-        }
+            try {
+              const passIsCorrect = await compare(password, data.password);
+              if(!passIsCorrect) res.json({error: "Incorrect Password"})
+              else{
+                res.json({foo: "Bar"})
+                console.log(`${username} logged in`);
+              }
+            }
+            catch(err){
+              console.error(err);
+            }
+          }
+          else{
+            res.json({
+              error: "No such username"
+            })
+          }
       })
   })
   //REGISTER

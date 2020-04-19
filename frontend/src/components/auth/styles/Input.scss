@@ -1,0 +1,73 @@
+@import "../../../_colors.scss";
+.input-container{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .input-error-msg{
+    text-align: center;
+    color: red;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+  }
+  .input-title{
+    margin-bottom: 1em;
+  }
+  form{
+    label{
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      .input-header{
+        font-size: .9em;
+      }
+      .input{
+        margin: .2em 0 1em;
+        padding: .4em 0 .4em 1.6em;
+        border: none;
+        outline: none;
+        background: none;
+        background-repeat: no-repeat;
+        background-size: 1em;
+        background-position: 5px;
+        color: #fff;
+        &.input--username{
+          background-image: url("../images/user.svg");
+        }
+        &.input--password{
+          background-image: url("../images/lock.svg");
+        }
+      }
+      &::after{
+        content: "";
+        position: absolute;
+        bottom: .5em;
+        background-color: #fff;
+        width: 100%;
+        height: 1px;
+        transform: scale(0);
+        transition: transform .3s ease;
+      }
+      &:hover{
+        &::after{
+          transform: scale(1);
+        }
+      }
+
+    }
+    .submit-btn{
+      margin-bottom: 1em;
+      width: 100%;
+      border: none;
+      background-color: $yellow;
+      padding: .8em 2em;
+      border-radius: 2em;
+      cursor: pointer;
+      color: #fff;
+    }
+  }
+  .usr-q a{
+    color: $green;
+  }
+}
