@@ -7,6 +7,7 @@ import Login from "./components/auth/Login.jsx";
 import SignUp from "./components/auth/SignUp.jsx";
 import Header from "./components/main/nav/Header.jsx";
 import Nav from "./components/main/nav/Nav.jsx";
+FOOBAR TEST
 function App() {
   return (
     <Router>
