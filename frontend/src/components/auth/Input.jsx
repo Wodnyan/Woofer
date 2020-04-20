@@ -1,6 +1,7 @@
 import React from "react";
 import style from "./styles/Input.scss"
 import {Link} from "react-router-dom";
+import postData from "../../_functions/postF.js"
 class User{
   constructor(un, pw){
     this.username = un;
@@ -33,25 +34,19 @@ export default class Input extends React.Component{
       })
       return;
     }
-    const user = new User(username, password)
-    const post = await fetch(url,{
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(user)
-    })
-    const resp = await post.json();
-    if(resp.error){
+    const user = new User(username, password);
+    const post = await postData(user, url);
+    console.log(post);
+    if(post.error){
       this.setState({
-        error: resp.error
+        error: post.error
       })
     }
     else{
       this.setState({
         error: ""
       })
-      console.log(resp);
+      console.log(post);
     }
   }
   render(){
