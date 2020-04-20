@@ -1,4 +1,4 @@
-const {User} = require("../database/database.js");
+const {User, Woof} = require("../database/database.js");
 const {hash, compare} = require("bcrypt");
 const saltRounds = 10;
 //Middleware to check for duplicate usernames
@@ -17,6 +17,14 @@ function checkUserName(req, res, next){
   })
 }
 module.exports = (app)=>{
+  //Woofs
+  app.post("/woofer", (req,res)=>{
+    const {woof, postedOn} = req.body;
+     new Woof({user:"foo", woof: woof, postedOn:postedOn}).save((err)=>{
+       if(err) console.error(err);
+       console.log("Woof saved");
+     })
+  })
   //LOGIN
   app.post("/user/login", (req,res)=>{
       const {username, password} = req.body;
@@ -52,7 +60,7 @@ module.exports = (app)=>{
     })
     res.status(200).send(req.body);
   })
-  app.get('/api/woofers',(req, res)=>{
+  app.get('/api/woofs',(req, res)=>{
     res.send("Woofer Api")
   })
 };
