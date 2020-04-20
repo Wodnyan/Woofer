@@ -6,8 +6,8 @@ export default function Nav(){
   return(
     <nav>
       <ul>
-        <li><Link to="/my-woofers">My woofers</Link></li>
-        <Dropdown dropDownTitle="Foo">
+        <li><Link to="/my-woofers">My woofs</Link></li>
+        <Dropdown dropDownTitle="Write a Woof">
           <TextBox/>
         </Dropdown>
         <li>Logout</li>

@@ -7,8 +7,15 @@ export default function TextBox(props){
     setTextAreaValue(e.target.value);
   }
   const handleClick = ()=>{
-    //TODO: Make it able to post
-    // postData(textAreaValue)
+    const dd = new Date()
+    const date = dd.toLocaleString();
+    if(!textAreaValue) return;
+    const woof = {
+      woof: textAreaValue,
+      postedOn: date
+    }
+    postData(woof, "http://localhost:3000/woofer");
+    setTextAreaValue("")
   }
   return(
     <>
