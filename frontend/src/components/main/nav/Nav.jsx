@@ -1,8 +1,9 @@
-import React from 'react';
-import {Link} from "react-router-dom";
+import React, {useState} from 'react';
+import {Link, Redirect} from "react-router-dom";
 import TextBox from "./TextBox.jsx";
 import Dropdown from "./Dropdown.jsx";
 export default function Nav(){
+  const [loggedOut, setLoggedOut] = useState(false);
   return(
     <nav className="nav-container">
       <ul>
@@ -10,8 +11,9 @@ export default function Nav(){
         <Dropdown dropDownTitle="Write a Woof">
           <TextBox/>
         </Dropdown>
-        <li>Logout</li>
+        <li onClick={()=> setLoggedOut(true)} style={{cursor: "pointer"}}>Logout</li>
       </ul>
+      {loggedOut && <Redirect to="/account/login"/>}
     </nav>
   )
 }

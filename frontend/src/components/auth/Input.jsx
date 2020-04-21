@@ -11,6 +11,7 @@ class User{
 export default class Input extends React.Component{
   constructor(props){
     super(props)
+    // TODO: Lift up the username
     this.state = {
       username: "",
       password: "",
@@ -51,6 +52,7 @@ export default class Input extends React.Component{
         error: "",
         redirect: true
       })
+      // TODO: Set the Authenticated to TRUE
     }
   }
 

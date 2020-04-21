@@ -7,12 +7,19 @@ import Login from "./components/auth/Login.jsx";
 import SignUp from "./components/auth/SignUp.jsx";
 import Header from "./components/main/nav/Header.jsx";
 import Nav from "./components/main/nav/Nav.jsx";
+import ProtectedComponent from "./components/ProtectedComponent.jsx";
+
 function App() {
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          <h1>Hello</h1>
+          <ProtectedComponent isAuth={true}>
+            <Header>
+              <h1 className="header__title">Woofer</h1>
+              <Nav/>
+            </Header>
+          </ProtectedComponent>
         </Route>
         <Route path="/woofer">
           <Header>
