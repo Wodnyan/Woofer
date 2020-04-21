@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 //Style
 import style from "./App.scss"
 //Components
@@ -16,7 +16,7 @@ function App() {
         </Route>
         <Route path="/woofer">
           <Header>
-            <h1>Title</h1>
+            <h1 className="header__title">Woofer</h1>
             <Nav/>
           </Header>
         </Route>
