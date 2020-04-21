@@ -1,0 +1,12 @@
+.text-box{
+  text-align: center;
+  .text-box__textarea{
+    resize: none;
+    width: 20vw;
+    height: 50vh;
+    padding: 1em;
+  }
+  .text-box__btn{
+    cursor: pointer;
+  }
+}

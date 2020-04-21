@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Link} from "react-router-dom";
 import TextBox from "./TextBox.jsx";
 import Dropdown from "./Dropdown.jsx";
 export default function Nav(){
   return(
-    <nav>
+    <nav className="nav-container">
       <ul>
         <li><Link to="/my-woofers">My woofs</Link></li>
         <Dropdown dropDownTitle="Write a Woof">

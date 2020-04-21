@@ -1,0 +1,21 @@
+.header{
+  margin: 0 auto;
+  padding: 1em 0;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  width: 95%;
+  .header__title{
+    grid-column: 2/3;
+  }
+  .nav-container{
+    justify-self: end;
+    align-self: center;
+    ul{
+      display: flex;
+      align-items: center;
+      li{
+        margin-right: 2em;
+      }
+    }
+  }
+}

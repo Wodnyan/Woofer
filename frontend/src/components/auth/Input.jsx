@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./styles/Input.scss"
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import postData from "../../_functions/postF.js"
 class User{
   constructor(un, pw){
@@ -13,11 +13,14 @@ export default class Input extends React.Component{
     super(props)
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      error: "",
+      redirect: false
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   handleInputChange(e){
     const target = e.target.name;
     const value = e.target.value;
@@ -25,6 +28,7 @@ export default class Input extends React.Component{
       [target]: value
     })
   }
+
   async handleSubmit(e, url){
     e.preventDefault();
     const {username, password} = this.state;
@@ -44,14 +48,15 @@ export default class Input extends React.Component{
     }
     else{
       this.setState({
-        error: ""
+        error: "",
+        redirect: true
       })
-      console.log(post);
     }
   }
+
   render(){
     const {title, url} = this.props;
-    const {username, password, error} = this.state
+    const {username, password, error, redirect} = this.state
     return(
     <div className="input-container">
       <h1 className="input-title">
@@ -70,8 +75,8 @@ export default class Input extends React.Component{
         <button type="submit" className="submit-btn">{title}</button>
       </form>
       {title === "Login" ? <p className="usr-q">Not a member? <Link to="./sign-up">Sign up now</Link></p> : <p className="usr-q">Already have an account? <Link to="./login">Login now</Link></p>}
+      {redirect && <Redirect to="/woofer"/>}
     </div>
   )
-  // <a href="http://localhost:3001/account/login">Login now!</a>
   }
 }

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import postData from "../../../_functions/postF.js"
+import postData from "../../../_functions/postF.js";
+import style from "./style/TextBox.scss";
 export default function TextBox(props){
   const [textAreaValue, setTextAreaValue] = useState("");
 
@@ -18,9 +19,9 @@ export default function TextBox(props){
     setTextAreaValue("")
   }
   return(
-    <>
-      <textarea onChange={handleChange} value={textAreaValue}/>
-      <button onClick={handleClick}>Submit</button>
-    </>
+    <div className="text-box">
+      <textarea className="text-box__textarea" onChange={handleChange} value={textAreaValue}/>
+      <button className="text-box__btn" onClick={handleClick}>Submit</button>
+    </div>
   )
 }
