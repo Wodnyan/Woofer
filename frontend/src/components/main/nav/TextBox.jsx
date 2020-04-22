@@ -12,6 +12,7 @@ export default function TextBox(props){
     const date = dd.toLocaleString();
     if(!textAreaValue) return;
     const woof = {
+      username: props.username,
       woof: textAreaValue,
       postedOn: date
     }

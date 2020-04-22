@@ -8,10 +8,14 @@ import SignUp from "./components/auth/SignUp.jsx";
 import Header from "./components/main/nav/Header.jsx";
 import Nav from "./components/main/nav/Nav.jsx";
 import ProtectedComponent from "./components/ProtectedComponent.jsx";
+import Woof from "./components/main/woof/Woof.jsx"
 
 function App() {
   const [username, setUsername] = useState("");
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState(true);
+  const propAuth = ()=>{
+    setAuth(!auth);
+  }
   return (
     <Router>
       <Switch>
@@ -24,16 +28,19 @@ function App() {
           </ProtectedComponent>
         </Route>
         <Route path="/woofer">
-          <Header>
-            <h1 className="header__title">Woofer</h1>
-            <Nav/>
-          </Header>
+          <ProtectedComponent isAuth={auth}>
+            <Header>
+              <h1 className="header__title">Woofer</h1>
+              <Nav username={username}/>
+            </Header>
+            <Woof />
+          </ProtectedComponent>
         </Route>
         <Route path="/account/sign-up">
-          <SignUp setUsername={setUsername} username={username}/>
+          <SignUp setUsername={setUsername} username={username} auth={propAuth}/>
         </Route>
         <Route path="/account/login">
-          <Login setUsername={setUsername} username={username}/>
+          <Login setUsername={setUsername} username={username} auth={propAuth}/>
         </Route>
         <Route path="*" component={() => "404 not found"}/>
       </Switch>
