@@ -8,13 +8,13 @@ import SignUp from "./components/auth/SignUp.jsx";
 import Header from "./components/main/nav/Header.jsx";
 import Nav from "./components/main/nav/Nav.jsx";
 import ProtectedComponent from "./components/ProtectedComponent.jsx";
-import Woof from "./components/main/woof/Woof.jsx"
+import AllWoofer from "./components/main/woof/AllWoofer.jsx"
 
 function App() {
   const [username, setUsername] = useState("");
-  const [auth, setAuth] = useState(true);
+  const [auth, setAuth] = useState(false);
   const propAuth = ()=>{
-    setAuth(!auth);
+    setAuth(true);
   }
   return (
     <Router>
@@ -29,11 +29,12 @@ function App() {
         </Route>
         <Route path="/woofer">
           <ProtectedComponent isAuth={auth}>
+            {username}
             <Header>
               <h1 className="header__title">Woofer</h1>
               <Nav username={username}/>
             </Header>
-            <Woof />
+            <AllWoofer />
           </ProtectedComponent>
         </Route>
         <Route path="/account/sign-up">
