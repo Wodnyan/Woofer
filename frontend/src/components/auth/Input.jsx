@@ -11,9 +11,7 @@ class User{
 export default class Input extends React.Component{
   constructor(props){
     super(props)
-    // TODO: Lift up the username
     this.state = {
-      username: "",
       password: "",
       error: "",
       redirect: false
@@ -25,14 +23,20 @@ export default class Input extends React.Component{
   handleInputChange(e){
     const target = e.target.name;
     const value = e.target.value;
-    this.setState({
-      [target]: value
-    })
+    if(target === "password"){
+      this.setState({
+        password: value
+      })
+    }
+    else{
+      this.props.setUsername(value);
+    }
   }
 
   async handleSubmit(e, url){
     e.preventDefault();
-    const {username, password} = this.state;
+    const {password} = this.state;
+    const {username} = this.props;
     if(!username || !password){
       this.setState({
         error: "Enter username and password"
@@ -48,11 +52,11 @@ export default class Input extends React.Component{
       })
     }
     else{
+      this.props.auth();
       this.setState({
         error: "",
         redirect: true
       })
-      // TODO: Set the Authenticated to TRUE
     }
   }
 

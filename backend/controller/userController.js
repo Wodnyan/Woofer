@@ -17,16 +17,24 @@ function checkUserName(req, res, next){
   })
 }
 module.exports = (app)=>{
+  //Woofer API
+  app.get("/api/woofer", (req, res)=>{
+      Woof.find({}, (err, docs)=>{
+        if(err) console.error(err);
+        res.json(docs);
+      })
+  })
   //Woofs
-  app.post("/woofer", (req,res)=>{
-    const {woof, postedOn} = req.body;
-     new Woof({user:"foo", woof: woof, postedOn:postedOn}).save((err)=>{
+  app.post("/woofer", (req, res)=>{
+    const {username, woof, postedOn} = req.body;
+    console.log(req.body);
+     new Woof({user: username, woof: woof, postedOn:postedOn}).save((err)=>{
        if(err) console.error(err);
        console.log("Woof saved");
      })
   })
   //LOGIN
-  app.post("/user/login", (req,res)=>{
+  app.post("/user/login", (req, res)=>{
       const {username, password} = req.body;
       User.findOne({username: username}, async (err, data)=>{
         if(err) console.log("Foo")
@@ -51,7 +59,7 @@ module.exports = (app)=>{
       })
   })
   //REGISTER
-  app.post("/user/signup", checkUserName, async (req,res)=>{
+  app.post("/user/signup", checkUserName, async (req, res)=>{
     const userInfo = req.body;
     const hashedPw = await hash(userInfo.password, saltRounds);
     new User({username: userInfo.username, password: hashedPw}).save((err)=>{
