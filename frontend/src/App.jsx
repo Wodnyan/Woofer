@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 //Style
 import style from "./App.scss"
@@ -10,11 +10,13 @@ import Nav from "./components/main/nav/Nav.jsx";
 import ProtectedComponent from "./components/ProtectedComponent.jsx";
 
 function App() {
+  const [username, setUsername] = useState("");
+  const [auth, setAuth] = useState(false);
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          <ProtectedComponent isAuth={true}>
+          <ProtectedComponent isAuth={auth}>
             <Header>
               <h1 className="header__title">Woofer</h1>
               <Nav/>
@@ -28,10 +30,10 @@ function App() {
           </Header>
         </Route>
         <Route path="/account/sign-up">
-          <SignUp/>
+          <SignUp setUsername={setUsername} username={username}/>
         </Route>
         <Route path="/account/login">
-          <Login/>
+          <Login setUsername={setUsername} username={username}/>
         </Route>
         <Route path="*" component={() => "404 not found"}/>
       </Switch>
