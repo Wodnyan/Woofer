@@ -8,5 +8,4 @@ export default function Content(props){
       <h5 className="woof__date">{postedOn}</h5>
     </div>
   )
-
 }

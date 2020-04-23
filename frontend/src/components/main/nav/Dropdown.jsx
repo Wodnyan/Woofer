@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import style from "./style/Dropdown.scss"
 export default function Dropdown(props){
   const {dropDownTitle} = props;
-  const [dropdown, setDropdown] = useState(true);
+  const [dropdown, setDropdown] = useState(false);
   const handleClick = ()=>{
     setDropdown(!dropdown);
   }
