@@ -11,6 +11,7 @@ export default function TextBox(props){
     const textAreaValueLength = target.value.length;
     setWoofLength(textAreaValueLength);
   }
+  console.log(woofLength);
   const handleClick = (e)=>{
     const dd = new Date()
     const date = dd.toLocaleString();
