@@ -1,7 +1,11 @@
 @import "../../../../_colors.scss";
-.text-box{
+.text-box-container{
   text-align: center;
-  .text-box__arrow-up{
+  .text-box{
+    background-color: black;
+    padding: 1em 1em 0em 1em;
+  }
+  .text-box-arrow-up{
     margin: 0 auto;
     transform: translateY(2px);
     width: 0;
@@ -15,10 +19,9 @@
     resize: none;
     width: 20vw;
     height: 50vh;
-    padding: 1em;
+    padding: .5em;
   }
   .text-box__btn{
-    transform: translateY(-50%);
     background: $yellow;
     color: #fff;
     padding: .8em 2em;
@@ -29,5 +32,8 @@
     &:hover{
       background-color: $green;
     }
+  }
+  .text-box__btn,.text-box__length{
+    transform: translateY(-50%);
   }
 }
