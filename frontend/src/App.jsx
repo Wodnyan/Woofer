@@ -9,13 +9,11 @@ import Header from "./components/main/nav/Header.jsx";
 import Nav from "./components/main/nav/Nav.jsx";
 import ProtectedComponent from "./components/ProtectedComponent.jsx";
 import AllWoofer from "./components/main/woof/AllWoofer.jsx"
+import MyWoofer from "./components/main/woof/MyWoofer.jsx"
 
 function App() {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState("USER");
   const [auth, setAuth] = useState(false);
-  const propAuth = ()=>{
-    setAuth(true);
-  }
   return (
     <Router>
       <Switch>
@@ -37,11 +35,22 @@ function App() {
             <AllWoofer />
           </ProtectedComponent>
         </Route>
+        <Route path="/dev/woofer">
+          <ProtectedComponent isAuth={true}>
+            {username}
+            <Header>
+              <h1 className="header__title">Woofer</h1>
+              <Nav username={username}/>
+            </Header>
+            {/*<AllWoofer />*/}
+            <MyWoofer username={username}/>
+          </ProtectedComponent>
+        </Route>
         <Route path="/account/sign-up">
-          <SignUp setUsername={setUsername} username={username} auth={propAuth}/>
+          <SignUp setUsername={setUsername} username={username} auth={setAuth}/>
         </Route>
         <Route path="/account/login">
-          <Login setUsername={setUsername} username={username} auth={propAuth}/>
+          <Login setUsername={setUsername} username={username} auth={setAuth}/>
         </Route>
         <Route path="*" component={() => "404 not found"}/>
       </Switch>

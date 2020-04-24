@@ -19,10 +19,19 @@ function checkUserName(req, res, next){
 module.exports = (app)=>{
   //Woofer API
   app.get("/api/woofer", (req, res)=>{
-      Woof.find({}, (err, docs)=>{
+      Woof.find({}, null, {sort: "-postedOn"},(err, data)=>{
         if(err) console.error(err);
-        res.json(docs);
+        res.json(data);
       })
+
+  })
+  app.post("/api/woofer/user", (req, res)=>{
+    console.log(req.body);
+    const {username} = req.body;
+    Woof.find({user: username}, null, {sort: "-postedOn"}, (err, data)=>{
+      if(err) console.error(err);
+      res.json(data)
+    })
   })
   //Woofs
   app.post("/woofer", (req, res)=>{

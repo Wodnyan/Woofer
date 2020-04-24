@@ -52,7 +52,7 @@ export default class Input extends React.Component{
       })
     }
     else{
-      this.props.auth();
+      this.props.auth(true);
       this.setState({
         error: "",
         redirect: true
