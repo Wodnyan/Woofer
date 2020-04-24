@@ -7,7 +7,7 @@ export default function Nav(props){
   return(
     <nav className="nav-container">
       <ul>
-        <li><Link to="/my-woofers">My woofs</Link></li>
+        <li><Link to={props.type === "My Woofs" ? "/my-woofs": "/woofer"}>{props.type}</Link></li>
         <Dropdown dropDownTitle="Write a Woof">
           <TextBox username={props.username}/>
         </Dropdown>

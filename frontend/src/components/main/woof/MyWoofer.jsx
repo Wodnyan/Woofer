@@ -8,6 +8,7 @@ export default function MyWoofer(props){
     const data = postF(props, url).then((data) => {
       setWoof(data);
     });
+    console.log("My woofer");
   }, [])
   const temp = woof.map((ss)=>{
     return <Content key={ss._id} woof={ss.woof} user={ss.user} postedOn={ss.postedOn}/>;
