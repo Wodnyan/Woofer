@@ -10,7 +10,7 @@ import Nav from "./components/main/nav/Nav.jsx";
 import ProtectedComponent from "./components/ProtectedComponent.jsx";
 import AllWoofer from "./components/main/woof/AllWoofer.jsx";
 import MyWoofer from "./components/main/woof/MyWoofer.jsx";
-import Load from "./components/main/load/Load.jsx";
+import NotFound from "./components/main/not_found/NotFound.jsx";
 
 function App() {
   const [username, setUsername] = useState("USER");
@@ -19,7 +19,6 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/dev">
-          <Load />
         </Route>
         <Route exact path="/">
 
@@ -50,7 +49,7 @@ function App() {
         <Route path="/account/login">
           <Login setUsername={setUsername} username={username} auth={setAuth}/>
         </Route>
-        <Route path="*" component={() => "404 not found"}/>
+        <Route path="*" render={(props)=> <NotFound />}/>
       </Switch>
     </Router>
   );

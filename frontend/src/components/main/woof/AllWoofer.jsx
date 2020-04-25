@@ -14,5 +14,5 @@ export default function AllWoofer(props){
   const temp = woof.map((ss)=>{
     return <Content key={ss._id} woof={ss.woof} user={ss.user} postedOn={ss.postedOn}/>;
   })
-  return woof.length > 0 ? temp : (<Load />) ;
+  return woof.length > 0 ? temp : <Load /> ;
 }
