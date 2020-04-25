@@ -4,7 +4,7 @@ import style from "./style/TextBox.scss";
 export default function TextBox(props){
   const [textAreaValue, setTextAreaValue] = useState("");
   const [woofLength, setWoofLength] = useState(0);
-  const woofLimit = 150;
+  const woofLimit = 250;
   const handleChange = (e)=>{
     const target = e.target
     setTextAreaValue(target.value);
@@ -21,7 +21,7 @@ export default function TextBox(props){
       woof: textAreaValue,
       postedOn: date
     }
-    if(woofLength >= woofLimit) return;
+    if(woofLength > woofLimit) return;
     postData(woof, "http://localhost:3000/woofer");
     setTextAreaValue("")
   }
@@ -31,7 +31,7 @@ export default function TextBox(props){
       <div className="text-box">
         <textarea className="text-box__textarea" onChange={handleChange} value={textAreaValue} placeholder="Write your woof here..."/>
         <button className="text-box__btn" onClick={handleClick}>Submit Woof</button>
-        <p className="text-box__length" style={{color: `${woofLength > woofLimit ? "red": "inherit"}`}}>{woofLength}/150</p>
+        <p className="text-box__length" style={{color: `${woofLength > woofLimit ? "red": "inherit"}`}}>{woofLength}/{woofLimit}</p>
       </div>
     </div>
   )
