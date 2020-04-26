@@ -1,30 +1,28 @@
 const {User, Woof} = require("../database/database.js");
 const {hash, compare} = require("bcrypt");
 const saltRounds = 10;
-//Middleware to check for duplicate usernames
-function checkUserName(req, res, next){
-  const {username} = req.body;
-  User.findOne({username: username }, (err, foo)=>{
-    if(err) console.error(err);
-    else if(foo === null) next();
-    else{
-      console.log("Username Taken ");
-      res.send({
-        error: "Username Taken"
-      })
-      return;
+const jwt = require("jsonwebtoken");
+module.exports = (app)=>{
+  //Check Auth
+  app.post("/user/check", (req, res)=>{
+    const {accessToken} = req.body;
+    try{
+      const foo = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)
+      console.log(foo);
+      res.json(foo)
+    }
+    catch(err){
+        res.sendStatus(401)
     }
   })
-}
-module.exports = (app)=>{
   //Woofer API
   app.get("/api/woofer", (req, res)=>{
       Woof.find({}, null, {sort: "-postedOn"},(err, data)=>{
         if(err) console.error(err);
         res.json(data);
       })
-
   })
+  //Woofer Api for individual users
   app.post("/api/woofer/user", (req, res)=>{
     console.log(req.body);
     const {username} = req.body;
@@ -33,12 +31,13 @@ module.exports = (app)=>{
       res.json(data)
     })
   })
-  //Woofs
+  //Save Woofs
   app.post("/woofer", (req, res)=>{
     const {username, woof, postedOn} = req.body;
     console.log(req.body);
      new Woof({user: username, woof: woof, postedOn:postedOn}).save((err)=>{
        if(err) console.error(err);
+       res.json({foo: "bar"})
        console.log("Woof saved");
      })
   })
@@ -52,7 +51,11 @@ module.exports = (app)=>{
               const passIsCorrect = await compare(password, data.password);
               if(!passIsCorrect) res.json({error: "Incorrect Password"})
               else{
-                res.json({foo: "Bar"})
+                const user = {
+                  username: data.username
+                }
+                const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+                res.json({accessToken: token})
                 console.log(`${username} logged in`);
               }
             }
@@ -69,15 +72,32 @@ module.exports = (app)=>{
   })
   //REGISTER
   app.post("/user/signup", checkUserName, async (req, res)=>{
-    const userInfo = req.body;
-    const hashedPw = await hash(userInfo.password, saltRounds);
-    new User({username: userInfo.username, password: hashedPw}).save((err)=>{
+    const {username, password} = req.body;
+    const hashedPw = await hash(password, saltRounds);
+    new User({username: username, password: hashedPw}).save((err)=>{
       if(err) console.error(err);
-      console.log(`${userInfo.username} created an account`);
+      console.log(`${username} created an account`);
     })
-    res.status(200).send(req.body);
-  })
-  app.get('/api/woofs',(req, res)=>{
-    res.send("Woofer Api")
+    const user = {
+      username
+    }
+    const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+    res.json({accessToken: token})
   })
 };
+
+//Middleware to check for duplicate usernames
+function checkUserName(req, res, next){
+  const {username} = req.body;
+  User.findOne({username: username }, (err, foo)=>{
+    if(err) console.error(err);
+    else if(foo === null) next();
+    else{
+      console.log("Username Taken ");
+      res.send({
+        error: "Username Taken"
+      })
+      return;
+    }
+  })
+}

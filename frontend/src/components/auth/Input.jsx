@@ -53,6 +53,7 @@ export default class Input extends React.Component{
     }
     else{
       this.props.auth(true);
+      document.cookie = post.accessToken;
       this.setState({
         error: "",
         redirect: true
