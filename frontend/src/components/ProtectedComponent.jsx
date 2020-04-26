@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import {Redirect} from "react-router-dom";
 export default function ProtectedComponent(props){
   if(props.isAuth){
