@@ -1,19 +1,19 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Link, Redirect} from "react-router-dom";
 import TextBox from "./TextBox.jsx";
 import Dropdown from "./Dropdown.jsx";
 export default function Nav(props){
-  const [loggedOut, setLoggedOut] = useState(false);
+  const path = props.type === "My Woofs" ? "/my-woofs" : "/woofer"
   return(
     <nav className="nav-container">
       <ul>
-        <li><Link to={props.type === "My Woofs" ? "/my-woofs" : "/woofer"}>{props.type}</Link></li>
+        <li><Link to={path}>{props.type}</Link></li>
         <Dropdown dropDownTitle="Write a Woof">
           <TextBox username={props.username}/>
         </Dropdown>
-        <li onClick={()=> setLoggedOut(true)} style={{cursor: "pointer"}}>Logout</li>
+        <li style={{cursor: "pointer"}}>Logout</li>
       </ul>
-      {loggedOut && <Redirect to="/account/login"/>}
+      {false && <Redirect to="/account/login"/>}
     </nav>
   )
 }
