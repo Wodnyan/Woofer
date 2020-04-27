@@ -19,29 +19,24 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/dev">
+
         </Route>
         <Route exact path="/">
 
         </Route>
         <Route path="/woofer">
-          <ProtectedComponent isAuth={auth}>
-            {username}
             <Header>
               <h1 className="header__title">Woofer</h1>
               <Nav username={username} type={"My Woofs"}/>
             </Header>
             <AllWoofer />
-          </ProtectedComponent>
         </Route>
         <Route path="/my-woofs">
-          <ProtectedComponent isAuth={auth}>
-            {username}
             <Header>
               <h1 className="header__title">Woofer</h1>
               <Nav username={username} type={"All Woofs"}/>
             </Header>
             <MyWoofer username={username}/>
-          </ProtectedComponent>
         </Route>
         <Route path="/account/sign-up">
           <SignUp setUsername={setUsername} username={username} auth={setAuth}/>

@@ -6,13 +6,15 @@ module.exports = (app)=>{
   //Check Auth
   app.post("/user/check", (req, res)=>{
     const {accessToken} = req.body;
+    console.log(req.cookies);
     try{
-      const foo = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)
-      console.log(foo);
-      res.json(foo)
+      const token = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)
+      console.log("SUCCESS");
+      res.json({token})
     }
     catch(err){
-        res.sendStatus(401)
+        res.json({error: "Error"});
+        console.log("ERROR");
     }
   })
   //Woofer API
@@ -46,16 +48,18 @@ module.exports = (app)=>{
       const {username, password} = req.body;
       User.findOne({username: username}, async (err, data)=>{
         if(err) console.log("Foo")
-        else if(data){
+        else if(!data){
+          console.log(data);
+            res.json({
+              error: "No such username"
+            })
+        }
+        else{
             try {
               const passIsCorrect = await compare(password, data.password);
               if(!passIsCorrect) res.json({error: "Incorrect Password"})
               else{
-                const user = {
-                  username: data.username
-                }
-                const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
-                res.json({accessToken: token})
+                res.json({username})
                 console.log(`${username} logged in`);
               }
             }
@@ -63,16 +67,12 @@ module.exports = (app)=>{
               console.error(err);
             }
           }
-          else{
-            res.json({
-              error: "No such username"
-            })
-          }
       })
   })
   //REGISTER
   app.post("/user/signup", checkUserName, async (req, res)=>{
     const {username, password} = req.body;
+    console.log(username);
     const hashedPw = await hash(password, saltRounds);
     new User({username: username, password: hashedPw}).save((err)=>{
       if(err) console.error(err);
@@ -82,7 +82,8 @@ module.exports = (app)=>{
       username
     }
     const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-    res.json({accessToken: token})
+    res.cookie('token', token, { domain: 'http://localhost:3001', path: '/', secure: true })
+    res.json({token})
   })
 };
 

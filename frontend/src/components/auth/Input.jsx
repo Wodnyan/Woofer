@@ -37,13 +37,15 @@ export default class Input extends React.Component{
     e.preventDefault();
     const {password} = this.state;
     const {username} = this.props;
+    //Check if username and password is typed
     if(!username || !password){
       this.setState({
         error: "Enter username and password"
       })
       return;
     }
-    const user = new User(username, password);
+    //Send User data
+    const user = new User(username, password)
     const post = await postData(user, url);
     console.log(post);
     if(post.error){
@@ -53,7 +55,6 @@ export default class Input extends React.Component{
     }
     else{
       this.props.auth(true);
-      document.cookie = post.accessToken;
       this.setState({
         error: "",
         redirect: true
