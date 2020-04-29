@@ -7,7 +7,7 @@ export default function Nav(props){
   return(
     <nav className="nav-container">
       <ul>
-        <li><Link to={path}>{props.type}</Link></li>
+        <li className="nav__woof-pages"><Link to={path}>{props.type}</Link></li>
         <Dropdown dropDownTitle="Write a Woof">
           <TextBox username={props.username}/>
         </Dropdown>

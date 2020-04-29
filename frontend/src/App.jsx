@@ -19,24 +19,29 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/dev">
-
         </Route>
         <Route exact path="/">
 
         </Route>
         <Route path="/woofer">
             <Header>
+              {username}
               <h1 className="header__title">Woofer</h1>
               <Nav username={username} type={"My Woofs"}/>
             </Header>
-            <AllWoofer />
+            <section className="woof-section">
+              <AllWoofer />
+            </section>
         </Route>
         <Route path="/my-woofs">
             <Header>
+              {username}
               <h1 className="header__title">Woofer</h1>
               <Nav username={username} type={"All Woofs"}/>
             </Header>
-            <MyWoofer username={username}/>
+            <section className="woof-section">
+              <MyWoofer username={username}/>
+            </section>
         </Route>
         <Route path="/account/sign-up">
           <SignUp setUsername={setUsername} username={username} auth={setAuth}/>
