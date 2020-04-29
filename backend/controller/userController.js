@@ -37,7 +37,7 @@ module.exports = (app)=>{
   app.post("/woofer", (req, res)=>{
     const {username, woof, postedOn} = req.body;
     console.log(req.body);
-     new Woof({user: username, woof: woof, postedOn:postedOn}).save((err)=>{
+     new Woof({user: username, woof: woof, postedOn:  postedOn}).save((err)=>{
        if(err) console.error(err);
        res.json({foo: "bar"})
        console.log("Woof saved");
