@@ -11,9 +11,8 @@ export default function TextBox(props){
     const textAreaValueLength = target.value.length;
     setWoofLength(textAreaValueLength);
   }
-  console.log(woofLength);
   const handleClick = (e)=>{
-    const dd = new Date()
+    const dd = new Date();
     const date = dd.toLocaleString();
     if(!textAreaValue) return;
     const woof = {
@@ -24,6 +23,7 @@ export default function TextBox(props){
     if(woofLength > woofLimit) return;
     postData(woof, "http://localhost:3000/woofer");
     setTextAreaValue("")
+    setWoofLength(0);
   }
   return(
     <div className="text-box-container">
