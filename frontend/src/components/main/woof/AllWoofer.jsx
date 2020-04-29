@@ -3,13 +3,23 @@ import Content from "./Content.jsx";
 import Load from "../load/Load.jsx";
 export default function AllWoofer(props){
   const [woof, setWoof] = useState([]);
+  const abortController = new AbortController()
   useEffect(()=>{
-    const getData = async ()=>{
-      const woofs =  await fetch("http://localhost:3000/api/woofer");
-      const data = woofs.json();
-      return data
+    let mounted = true;
+    if(mounted){
+      const getData = async ()=>{
+        const woofs =  await fetch("http://localhost:3000/api/woofer", {signal: abortController.signal});
+        const data = woofs.json();
+        return data
+      }
+      const data = getData()
+                    .then((dd)=> setWoof(dd))
+                    .catch(err => {
+                      if(err.name === "AbortError") return;
+                       throw err;
+                    })
     }
-    const data = getData().then((dd)=> setWoof(dd));
+    return () => abortController.abort();
   }, [])
   const temp = woof.map((ss)=>{
     return <Content key={ss._id} woof={ss.woof} user={ss.user} postedOn={ss.postedOn}/>;

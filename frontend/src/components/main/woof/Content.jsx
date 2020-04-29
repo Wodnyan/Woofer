@@ -1,11 +1,12 @@
 import React from 'react';
+import style from "./style/Content.scss"
 export default function Content(props){
   const {woof, user, postedOn} = props;
   return(
     <div className="woof-container">
-      <h1 className="woof__user">{user}</h1>
+      <span className="woof__user">{user}</span>
+      <span className="woof__date">{postedOn}</span>
       <p className="woof__content">{woof}</p>
-      <h5 className="woof__date">{postedOn}</h5>
     </div>
   )
 }
