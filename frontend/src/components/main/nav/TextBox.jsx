@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import postData from "../../../_functions/postF.js";
 import style from "./style/TextBox.scss";
+import axios from "axios";
 export default function TextBox(props){
   const [textAreaValue, setTextAreaValue] = useState("");
   const [woofLength, setWoofLength] = useState(0);
   const woofLimit = 250;
+  const url = "http://localhost:3000/woofer"
   const handleChange = (e)=>{
     const target = e.target
     setTextAreaValue(target.value);
@@ -21,9 +23,12 @@ export default function TextBox(props){
       postedOn: date
     }
     if(woofLength > woofLimit) return;
-    postData(woof, "http://localhost:3000/woofer");
-    setTextAreaValue("")
-    setWoofLength(0);
+    axios
+      .post(url, woof)
+      .then((resp) => {
+        setTextAreaValue("")
+        setWoofLength(0);
+      })
   }
   return(
     <div className="text-box-container">

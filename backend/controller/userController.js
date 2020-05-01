@@ -5,17 +5,9 @@ const jwt = require("jsonwebtoken");
 module.exports = (app)=>{
   //Check Auth
   app.post("/user/check", (req, res)=>{
-    const {accessToken} = req.body;
-    console.log(req.cookies);
-    try{
-      const token = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET)
-      console.log("SUCCESS");
-      res.json({token})
-    }
-    catch(err){
-        res.json({error: "Error"});
-        console.log("ERROR");
-    }
+    console.log(req.body)
+    res.cookie("foo", "bar", {httpOnly: true});
+    res.json(req.body);
   })
   //Woofer API
   app.get("/api/woofer", (req, res)=>{
@@ -28,7 +20,7 @@ module.exports = (app)=>{
   app.post("/api/woofer/user", (req, res)=>{
     console.log(req.body);
     const {username} = req.body;
-    Woof.find({user: username}, null, {sort: "-postedOn"}, (err, data)=>{
+      Woof.find({user: username}, null, {sort: "-postedOn"}, (err, data)=>{
       if(err) console.error(err);
       res.json(data)
     })
@@ -59,6 +51,8 @@ module.exports = (app)=>{
               const passIsCorrect = await compare(password, data.password);
               if(!passIsCorrect) res.json({error: "Incorrect Password"})
               else{
+                const token = createToken({username});
+                res.cookie("token", token, {httpOnly: true});
                 res.json({username})
                 console.log(`${username} logged in`);
               }
@@ -81,12 +75,14 @@ module.exports = (app)=>{
     const user = {
       username
     }
-    const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-    res.cookie('token', token, { domain: 'http://localhost:3001', path: '/', secure: true })
-    res.json({token})
+    const token = createToken(user);
+    res.cookie("token", token, {httpOnly: false});
+    res.json({user})
   })
 };
-
+function createToken(user){
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+}
 //Middleware to check for duplicate usernames
 function checkUserName(req, res, next){
   const {username} = req.body;
