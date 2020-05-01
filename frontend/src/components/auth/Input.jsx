@@ -1,13 +1,8 @@
 import React from "react";
 import style from "./styles/Input.scss"
-import {Link, Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom"
 import postData from "../../_functions/postF.js"
-class User{
-  constructor(un, pw){
-    this.username = un;
-    this.password = pw;
-  }
-}
+import axios from "axios"
 export default class Input extends React.Component{
   constructor(props){
     super(props)
@@ -36,7 +31,7 @@ export default class Input extends React.Component{
   async handleSubmit(e, url){
     e.preventDefault();
     const {password} = this.state;
-    const {username} = this.props;
+    const {username, auth} = this.props;
     //Check if username and password is typed
     if(!username || !password){
       this.setState({
@@ -44,22 +39,19 @@ export default class Input extends React.Component{
       })
       return;
     }
-    //Send User data
-    const user = new User(username, password)
-    const post = await postData(user, url);
-    console.log(post);
-    if(post.error){
-      this.setState({
-        error: post.error
+    axios
+      .post(url, {
+        username,
+        password
       })
-    }
-    else{
-      this.props.auth(true);
-      this.setState({
-        error: "",
-        redirect: true
+      .then((resp) => {
+        const data = resp.data
+        if(data.error) this.setState({error: resp.data.error})
+        else{
+          auth(true)
+          this.setState({redirect: true})
+        }
       })
-    }
   }
 
   render(){

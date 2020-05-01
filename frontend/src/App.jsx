@@ -24,6 +24,7 @@ function App() {
 
         </Route>
         <Route path="/woofer">
+          <ProtectedComponent isAuth={auth}>
             <Header>
               {username}
               <h1 className="header__title">Woofer</h1>
@@ -32,6 +33,7 @@ function App() {
             <section className="woof-section">
               <AllWoofer />
             </section>
+          </ProtectedComponent>
         </Route>
         <Route path="/my-woofs">
             <Header>
