@@ -2,12 +2,21 @@ const {User, Woof} = require("../database/database.js");
 const {hash, compare} = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
+
 module.exports = (app)=>{
   //Check Auth
   app.post("/user/check", (req, res)=>{
-    console.log(req.body)
-    res.cookie("foo", "bar", {httpOnly: true});
-    res.json(req.body);
+    const token = req.cookies.token
+    try{
+        const verified = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        if(verified){
+          console.log("Verified");
+          res.json({verified: true});
+        }
+    }
+    catch(err){
+      res.json({verified: false})
+    }
   })
   //Woofer API
   app.get("/api/woofer", (req, res)=>{

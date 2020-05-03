@@ -58,13 +58,14 @@
     }
     .submit-btn{
       margin-bottom: 1em;
+      padding: .8em 2em;
       width: 100%;
+      border-radius: 2em;
       border: none;
       background-color: $yellow;
-      padding: .8em 2em;
-      border-radius: 2em;
-      cursor: pointer;
       color: #fff;
+      text-decoration: none;
+      cursor: pointer;
     }
   }
   .usr-q a{
