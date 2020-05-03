@@ -1,0 +1,80 @@
+@import "../../../../_colors.scss";
+.hero{
+  position: relative;
+  height: 100%;
+  width: 100%;
+  .hero__squiggle{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    // width: 100%;
+    height: 100%;
+    z-index: -50;
+    img{
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .hero__img{
+    position: absolute;
+    z-index: -100;
+    width: 100%;
+    height: 100%;
+
+    img{
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+
+    &::after{
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba($rich-black, .3);
+    }
+  }
+
+  .hero__txt-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-left: 3em;
+    height: 100%;
+
+    .hero__title,
+    .hero__txt{
+      text-shadow: 2px 2px 5px $rich-black;
+    }
+
+    .hero__title{
+      font-size: 4em;
+    }
+
+    .hero__txt{
+      margin-bottom: .7em;
+      width: 40%;
+      font-size: 1.7em;
+
+    }
+  }
+  .hero__btn{
+    padding: .7em 1.5em;
+    width: 12em;
+    font-size: 1.2em;
+    border-radius: 2em;
+    color: #fff;
+    background-color: $green;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color .2s ease; 
+
+    &:hover{
+      background-color: $yellow;
+    }
+  }
+}

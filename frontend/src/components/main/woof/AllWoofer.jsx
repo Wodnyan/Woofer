@@ -1,7 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import Content from "./Content.jsx";
-import Load from "../load/Load.jsx";
-import axios from "axios";
+import React, {useState, useEffect} from 'react'
+import Content from "./Content.jsx"
+import Load from "../load/Load.jsx"
+import axios from "axios"
+
 export default function AllWoofer(props){
   const [woof, setWoof] = useState([]);
   const abortController = new AbortController();

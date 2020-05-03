@@ -1,8 +1,8 @@
 import React from "react";
-import style from "./styles/Input.scss"
 import {Link, Redirect} from "react-router-dom"
-import postData from "../../_functions/postF.js"
+import style from "./styles/Input.scss"
 import axios from "axios"
+
 export default class Input extends React.Component{
   constructor(props){
     super(props)
@@ -43,6 +43,8 @@ export default class Input extends React.Component{
       .post(url, {
         username,
         password
+      }, {
+        withCredentials: true
       })
       .then((resp) => {
         const data = resp.data
