@@ -13,6 +13,7 @@ import AllWoofer from "./components/main/woof/AllWoofer.jsx"
 import MyWoofer from "./components/main/woof/MyWoofer.jsx"
 import NotFound from "./components/main/not_found/NotFound.jsx"
 import LandingPage from "./components/main/landing_page/LandingPage.jsx"
+
 function App() {
   const [username, setUsername] = useState("USER");
   const [auth, setAuth] = useState(false);
@@ -20,16 +21,17 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/dev">
+
         </Route>
         <Route exact path="/">
           <LandingPage />
         </Route>
         <Route path="/woofer">
-          <ProtectedComponent auth={auth} setAuth={setAuth}>
+          <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>
             <Header>
               {username}
               <h1 className="header__title">Woofer</h1>
-              <Nav username={username} type={"My Woofs"}/>
+              <Nav username={username} type={"My Woofs"} />
             </Header>
             <section className="woof-section">
               <AllWoofer />
@@ -37,22 +39,24 @@ function App() {
           </ProtectedComponent>
         </Route>
         <Route path="/my-woofs">
+          <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>
             <Header>
               {username}
               <h1 className="header__title">Woofer</h1>
-              <Nav username={username} type={"All Woofs"}/>
+              <Nav username={username} type={"All Woofs"} />
             </Header>
             <section className="woof-section">
-              <MyWoofer username={username}/>
+              <MyWoofer username={username} />
             </section>
+          </ProtectedComponent>
         </Route>
-        <Route path="/account/sign-up">
-          <SignUp setUsername={setUsername} username={username} auth={setAuth}/>
+        <Route exact path="/account/sign-up">
+          <SignUp setUsername={setUsername} username={username} auth={setAuth} />
         </Route>
-        <Route path="/account/login">
-          <Login setUsername={setUsername} username={username} auth={setAuth}/>
+        <Route exact path="/account/login">
+          <Login setUsername={setUsername} username={username} auth={setAuth} />
         </Route>
-        <Route path="*" render={(props)=> <NotFound />}/>
+        <Route path="*" render={(props)=> <NotFound />} />
       </Switch>
     </Router>
   );
