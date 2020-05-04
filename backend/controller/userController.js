@@ -10,8 +10,11 @@ module.exports = (app)=>{
     try{
         const verified = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
         if(verified){
-          console.log("Verified");
-          res.json({verified: true});
+          console.log(verified);
+          res.json({
+            verified: true,
+            username: verified.username
+          });
         }
     }
     catch(err){
