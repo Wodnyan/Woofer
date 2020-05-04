@@ -39,6 +39,12 @@ export default class Input extends React.Component{
       })
       return;
     }
+    if(password.length < 6) {
+      this.setState({
+        error: "Password needs to be longer than 6 characters"
+      })
+      return;
+    }
     axios
       .post(url, {
         username,
