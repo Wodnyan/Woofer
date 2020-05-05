@@ -4,23 +4,9 @@ const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 
 module.exports = (app)=>{
-  //Check Auth
-  app.post("/user/check", (req, res)=>{
-    const token = req.cookies.token
-    try{
-        const verified = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-        if(verified){
-          console.log(verified);
-          res.json({
-            verified: true,
-            username: verified.username
-          });
-        }
-    }
-    catch(err){
-      res.json({verified: false})
-    }
-  })
+  /***
+  TODO: Export the WOOF stuff into a new file for clarity
+  ***/
   //Woofer API
   app.get("/api/woofer", (req, res)=>{
       Woof.find({}, null, {sort: "-postedOn"},(err, data)=>{
@@ -91,7 +77,29 @@ module.exports = (app)=>{
     res.cookie("token", token, {httpOnly: false});
     res.json({user})
   })
+
+  //Check Auth
+  app.post("/user/check", (req, res)=>{
+    const token = req.cookies.token
+    try{
+      const verified = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      if(verified){
+        console.log(verified);
+        res.json({
+          verified: true,
+          username: verified.username
+        });
+      }
+    }
+    catch(err){
+      res.json({verified: false})
+    }
+  })
 };
+
+/***
+ TODO: Export these into a different file
+***/
 function createToken(user){
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
 }
