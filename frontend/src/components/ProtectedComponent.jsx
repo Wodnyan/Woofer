@@ -8,29 +8,23 @@ export default function ProtectedComponent(props){
   const [redirect, setRedirect] = useState(false);
   //Props
   const {auth, setAuth, setUsername} = props;
-
   const source = CancelToken.source();
-
   const getToken = async () => {
     const url = "http://localhost:3000/user/check";
     const getData = await axios.post(url, {}, {withCredentials: true, cancelToken: source.token});
     const {verified, token, username} = getData.data;
-    console.log(verified, username);
-    setAuth(verified);
     setUsername(username);
+    setAuth(verified);
   }
-
   useEffect(() => {
     let timeout;
-    getToken();
     if(!auth){
        timeout = setTimeout(function () {
         setRedirect(true);
-      }, 2000)
+      }, 2500)
     }
-    
+    source.cancel();
     return () => {
-      source.cancel();
       clearTimeout(timeout)
     }
   })

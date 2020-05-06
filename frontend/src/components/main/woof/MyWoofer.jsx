@@ -1,25 +1,25 @@
 import React, {useState, useEffect} from 'react'
-import postF from "../../../_functions/postF.js"
 import Content from "./Content.jsx"
 import Load from "../load/Load.jsx"
+import UserInfo from "../user_info/UserInfo.jsx"
 import axios from "axios"
 
 export default function MyWoofer(props){
   const url = "http://localhost:3000/api/woofer/user"
   const [woof, setWoof] = useState([]);
-  const abortController = new AbortController()
+  const [description, setDescription] = useState("");  
   useEffect(()=>{
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
-    const {username} = props;
     axios
       .post(url, {
-        username
+        username: props.username
       }, {
         cancelToken: source.token
       })
       .then((resp) => {
-        setWoof(resp.data)
+        setWoof(resp.data.woofs);
+        console.log(resp)
       })
       .catch((err) => {
         if(axios.isCancel(err)) return;
@@ -33,5 +33,13 @@ export default function MyWoofer(props){
     return <Content key={ss._id} woof={ss.woof} user={ss.user} postedOn={ss.postedOn}/>;
   })
   // return temp;
-  return woof.length > 0 ? temp : <Load /> ;
+  if(woof.length < 0) return <Load />
+  else{
+    return (
+      <>
+        <UserInfo username={props.username} description={description}/>
+        {temp}
+      </>
+    )
+  }
 }

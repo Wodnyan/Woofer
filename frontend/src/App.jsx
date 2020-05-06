@@ -13,7 +13,6 @@ import AllWoofer from "./components/main/woof/AllWoofer.jsx"
 import MyWoofer from "./components/main/woof/MyWoofer.jsx"
 import NotFound from "./components/main/not_found/NotFound.jsx"
 import LandingPage from "./components/main/landing_page/LandingPage.jsx"
-
 function App() {
   const [username, setUsername] = useState("USER");
   const [auth, setAuth] = useState(false);
@@ -21,7 +20,14 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/dev">
-
+          <Header>
+            {username}
+            <h1 className="header__title">Woofer</h1>
+            <Nav username={username} type={"All Woofs"} />
+          </Header>
+          <section className="woof-section">
+            <MyWoofer username={username} />
+          </section>
         </Route>
         <Route exact path="/">
           <LandingPage />
