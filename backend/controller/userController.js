@@ -15,12 +15,23 @@ module.exports = (app)=>{
       })
   })
   //Woofer Api for individual users
-  app.post("/api/woofer/user", (req, res)=>{
-    console.log(req.body);
+  app.post("/api/woofer/user", async (req, res)=>{
     const {username} = req.body;
-      Woof.find({user: username}, null, {sort: "-postedOn"}, (err, data)=>{
-      if(err) console.error(err);
-      res.json(data)
+      User.findOne({username}, (err, userData) => {
+        if(err) console.error(err);
+        if(userData) {
+            const {username} = userData; 
+            Woof.find({user: username}, null, {sort: "-postedOn"}, (err, data)=>{
+              if(err) console.error(err);
+              res.json({
+                userData: username,
+                woofs: data
+              })
+            })
+        }
+        else {
+            res.status(401).send({error: "You don't have access to this page"})    
+        }
     })
   })
   //Save Woofs
