@@ -11,7 +11,10 @@ const WoofSchema = new Schema({
 })
 const UserSchema = new Schema({
   username: String,
-  password: String
+  password: String,
+  userInfo: {
+    description: String
+  }  
 })
 const User = mongoose.model("Users", UserSchema);
 const Woof = mongoose.model("Woofs", WoofSchema);
