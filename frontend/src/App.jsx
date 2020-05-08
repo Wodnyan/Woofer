@@ -55,12 +55,14 @@ function App() {
           <Login setUsername={setUsername} username={username} auth={setAuth} />
         </Route>
         <Route exact path="/settings">
-          <Header>
-            {username}
-            <h1 className="header__title">Woofer</h1>
-            <Nav username={username} type={"All Woofs"} setAuth={setAuth} />
-          </Header>
-          <Settings />
+          <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>
+            <Header>
+              {username}
+              <h1 className="header__title">Woofer</h1>
+              <Nav username={username} type={"All Woofs"} setAuth={setAuth} />
+            </Header>
+            <Settings />
+          </ProtectedComponent>
         </Route>
         <Route path="*" render={(props)=> <NotFound />} />
       </Switch>

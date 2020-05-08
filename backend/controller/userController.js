@@ -29,7 +29,7 @@ module.exports = (app)=>{
             })
         }
         else {
-            res.status(401).send({error: "You don't have access to this page"})    
+            res.status(401).send({error: "You don't have access to this page"})
         }
     })
   })
@@ -42,6 +42,14 @@ module.exports = (app)=>{
        res.json({foo: "bar"})
        console.log("Woof saved");
      })
+  })
+  app.post("/user/description", (req, res) => {
+    const token = req.cookies.token;
+    const {username} = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    User.updateOne({username: username}, {userInfo: {description: req.body.description}}, (err) => {
+      if(err) console.error(err);
+      console.log(`${username} changed their description`);
+    })
   })
   //LOGIN
   app.post("/user/login", (req, res)=>{
@@ -87,6 +95,7 @@ module.exports = (app)=>{
     res.cookie("token", token, {httpOnly: false});
     res.json({user})
   })
+  //Delete cookie on logout
   app.post("/cookie", (req, res) => {
     console.log(req.body)
     res.cookie("token", "", {expires: new Date(Date.now() + 100)})
