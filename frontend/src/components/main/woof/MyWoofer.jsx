@@ -18,8 +18,10 @@ export default function MyWoofer(props){
         cancelToken: source.token
       })
       .then((resp) => {
-        setWoof(resp.data.woofs);
-        console.log(resp)
+        const {woofs} = resp.data;
+        const {description} = resp.data.userInfo;
+        setWoof(woofs);
+        setDescription(description)
       })
       .catch((err) => {
         if(axios.isCancel(err)) return;
