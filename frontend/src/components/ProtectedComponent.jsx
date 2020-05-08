@@ -21,7 +21,7 @@ export default function ProtectedComponent(props){
     if(!auth){
        timeout = setTimeout(function () {
         setRedirect(true);
-      }, 2500)
+      }, 1500)
     }
     source.cancel();
     return () => {

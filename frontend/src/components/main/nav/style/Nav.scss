@@ -18,19 +18,44 @@
   .nav-container{
     justify-self: end;
     align-self: center;
-    .nav__woof-pages a{
-      padding: .5em 1em;
-      border-radius: 2em;
-      color: inherit;
-      text-decoration: none;
-      background-color: $yellow;
-      outline: none;
-    }
+
     ul{
       display: flex;
       align-items: center;
       li{
         margin-right: 2em;
+      }
+    }
+  }
+  ul.user-options{
+    position: relative;
+    flex-direction: column;
+    align-items: start;
+    width: 200px;
+    background-color: $green;
+    z-index: 5000;
+    a{
+        outline: none;
+        color: #fff;
+        text-decoration: none;
+    }
+    .user-options__item{
+      margin: 0;
+      padding: .5em .8em;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      border-bottom: 1px solid #fff;
+
+      .options-name{
+        font-size: 1.2em;
+      }
+      .options-logo{
+        width: 30px;
+        margin-right: .4em;
+        fill: brightness(0) saturate(100%);
+        filter: invert(100%) sepia(5%) saturate(731%) hue-rotate(291deg) brightness(112%) contrast(100%);//Make the SVG white
       }
     }
   }

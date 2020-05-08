@@ -20,11 +20,10 @@ module.exports = (app)=>{
       User.findOne({username}, (err, userData) => {
         if(err) console.error(err);
         if(userData) {
-            const {username} = userData; 
             Woof.find({user: username}, null, {sort: "-postedOn"}, (err, data)=>{
               if(err) console.error(err);
               res.json({
-                userData: username,
+                userData: userData.username,
                 woofs: data
               })
             })
@@ -88,7 +87,11 @@ module.exports = (app)=>{
     res.cookie("token", token, {httpOnly: false});
     res.json({user})
   })
-
+  app.post("/cookie", (req, res) => {
+    console.log(req.body)
+    res.cookie("token", "", {expires: new Date(Date.now() + 100)})
+    res.send("Cookie Deleted")
+  })
   //Check Auth
   app.post("/user/check", (req, res)=>{
     const token = req.cookies.token
