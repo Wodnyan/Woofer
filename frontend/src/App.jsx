@@ -6,6 +6,7 @@ import style from "./App.scss"
 //Components
 import Login from "./components/auth/Login.jsx"
 import SignUp from "./components/auth/SignUp.jsx"
+//TODO: make this one component
 import Header from "./components/main/nav/Header.jsx"
 import Nav from "./components/main/nav/Nav.jsx"
 import ProtectedComponent from "./components/ProtectedComponent.jsx"
@@ -13,22 +14,13 @@ import AllWoofer from "./components/main/woof/AllWoofer.jsx"
 import MyWoofer from "./components/main/woof/MyWoofer.jsx"
 import NotFound from "./components/main/not_found/NotFound.jsx"
 import LandingPage from "./components/main/landing_page/LandingPage.jsx"
+import Settings from "./components/main/settings/Settings.jsx"
 function App() {
   const [username, setUsername] = useState("USER");
   const [auth, setAuth] = useState(false);
   return (
     <Router>
       <Switch>
-        <Route exact path="/dev">
-          <Header>
-            {username}
-            <h1 className="header__title">Woofer</h1>
-            <Nav username={username} type={"All Woofs"} />
-          </Header>
-          <section className="woof-section">
-            <MyWoofer username={username} />
-          </section>
-        </Route>
         <Route exact path="/">
           <LandingPage />
         </Route>
@@ -37,7 +29,7 @@ function App() {
             <Header>
               {username}
               <h1 className="header__title">Woofer</h1>
-              <Nav username={username} type={"My Woofs"} />
+              <Nav username={username} type={"My Woofs"} setAuth={setAuth} />
             </Header>
             <section className="woof-section">
               <AllWoofer />
@@ -49,7 +41,7 @@ function App() {
             <Header>
               {username}
               <h1 className="header__title">Woofer</h1>
-              <Nav username={username} type={"All Woofs"} />
+              <Nav username={username} type={"All Woofs"} setAuth={setAuth} />
             </Header>
             <section className="woof-section">
               <MyWoofer username={username} />
@@ -61,6 +53,14 @@ function App() {
         </Route>
         <Route exact path="/account/login">
           <Login setUsername={setUsername} username={username} auth={setAuth} />
+        </Route>
+        <Route exact path="/settings">
+          <Header>
+            {username}
+            <h1 className="header__title">Woofer</h1>
+            <Nav username={username} type={"All Woofs"} setAuth={setAuth} />
+          </Header>
+          <Settings />
         </Route>
         <Route path="*" render={(props)=> <NotFound />} />
       </Switch>

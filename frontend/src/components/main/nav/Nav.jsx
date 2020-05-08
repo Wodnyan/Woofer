@@ -8,6 +8,7 @@ import pawSvg from "./imgs/dog-paw.svg"
 
 export default function Nav(props){
   const path = props.type === "My Woofs" ? "/my-woofs" : "/woofer"
+  const {setAuth} = props;
   return(
     <nav className="nav-container">
       <ul>
@@ -27,7 +28,7 @@ export default function Nav(props){
           <TextBox username={props.username}/>
         </Dropdown>
         <li>
-          <Logout />
+          <Logout setAuth={setAuth}/>
         </li>
       </ul>
       {false && <Redirect to="/account/login"/>}
