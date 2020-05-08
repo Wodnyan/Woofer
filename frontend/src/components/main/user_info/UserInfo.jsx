@@ -1,5 +1,5 @@
 import React from 'react';
-import img  from "./imgs/astronaut.svg"
+import img  from "../imgs/astronaut.svg"
 export default function UserInfo(props){
     const {username, description} = props;
   return (
@@ -10,7 +10,7 @@ export default function UserInfo(props){
       <div className="user__username">
         {username}
       </div>
-      <div className="user__description"> 
+      <div className="user__description">
         {description}
       </div>
     </div>
