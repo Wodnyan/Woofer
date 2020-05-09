@@ -6,7 +6,7 @@ export default function Content(props){
   return(
     <div className="woof-container">
       <span className="woof__profile-pic">
-        <img src={profPic} style={{width: "50px"}} alt="profile picture"></img>
+        <img src={profPic} alt="profile picture"></img>
       </span>
       <span className="woof__user">{user}</span>
       <span className="woof__date">{postedOn}</span>

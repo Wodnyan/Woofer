@@ -11,6 +11,7 @@ module.exports = (app)=>{
   app.get("/api/woofer", (req, res)=>{
       Woof.find({}, null, {sort: "-postedOn"},(err, data)=>{
         if(err) console.error(err);
+        console.log(data)
         res.json(data);
       })
   })
@@ -19,11 +20,12 @@ module.exports = (app)=>{
     const {username} = req.body;
       User.findOne({username}, (err, userData) => {
         if(err) console.error(err);
+        const {userInfo} = userData;
         if(userData) {
             Woof.find({user: username}, null, {sort: "-postedOn"}, (err, data)=>{
               if(err) console.error(err);
               res.json({
-                userData: userData.username,
+                userInfo,
                 woofs: data
               })
             })
