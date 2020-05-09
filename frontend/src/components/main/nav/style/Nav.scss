@@ -32,23 +32,26 @@
     align-items: start;
     width: 200px;
     background-color: $green;
+    border-radius: .5em;
     z-index: 5000;
+    a{
+      outline: none;
+      color: #fff;
+      text-decoration: none;
+    }
     .user-options__item{
-      margin: 0;
-      padding: .5em .8em;
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      margin: 0;
+      padding: .5em .8em;
       width: 100%;
       transition: background-color .2s ease;
       cursor: pointer;
-      .options-name{
+      .options__name{
         font-size: 1.2em;
-        outline: none;
-        color: #fff;
-        text-decoration: none;
       }
-      .options-logo{
+      .options__logo{
         width: 30px;
         margin-right: .4em;
         filter: invert(100%) sepia(5%) saturate(731%) hue-rotate(291deg) brightness(112%) contrast(100%);//Make the SVG white
@@ -58,7 +61,11 @@
       }
     }
     .user-options__item:first-child{
+      border-radius: .5em .5em 0 0;
       border-bottom: 1px solid white;
+    }
+    .user-options__item:last-child{
+      border-radius: 0 0 .5em .5em;
     }
   }
 }

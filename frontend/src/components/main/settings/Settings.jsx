@@ -1,11 +1,17 @@
 import React from 'react';
 import Description from "./Description.jsx"
+import ExpandingCard from "../expanding_card/ExpandingCard.jsx"
 //TODO: Light mode
-//TODO: Setting description for user
+//TODO: Make ExpandingCards
 function Settings(props){
   return (
     <div style={{marginTop: "80px"}}>
-      <Description />
+      <ExpandingCard cardName={"Description"}>
+        <Description />
+      </ExpandingCard>
+      <ExpandingCard cardName={"Light Mode"}>
+        <Description />
+      </ExpandingCard>
     </div>
   )
 }
