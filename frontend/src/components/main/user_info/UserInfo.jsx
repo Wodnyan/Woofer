@@ -1,5 +1,6 @@
 import React from 'react';
 import img  from "../imgs/astronaut.svg"
+import style from "./UserInfo.scss"
 export default function UserInfo(props){
     const {username, description} = props;
   return (
