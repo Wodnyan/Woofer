@@ -2,8 +2,9 @@
 .text-box-container{
   text-align: center;
   .text-box{
-    background-color: black;
-    padding: 1em 1em 0em 1em;
+    background-color: $green;
+    padding: .7em .7em 0em .7em;
+    border-radius: 1.5em;
   }
   .text-box-arrow-up{
     margin: 0 auto;
@@ -13,27 +14,34 @@
     border-top: 0px;
     border-left: .8em solid transparent;
     border-right: .8em solid transparent;
-    border-bottom: .8em solid #fff;
+    border-bottom: .8em solid $green;
   }
   .text-box__textarea{
     resize: none;
     width: 20vw;
     height: 50vh;
     padding: .5em;
+    border: none;
+    border-radius: 1em;
+    font-size: 1.2em;
   }
   .text-box__btn{
     background: $yellow;
     color: #fff;
     padding: .8em 2em;
-    border: none;
+    border: 2px solid $yellow;
     border-radius: 2em;
     cursor: pointer;
     transition:background-color .2s ease-out;
     &:hover{
-      background-color: $green;
+      background-color: #fff;
+      color: $yellow;
     }
   }
   .text-box__btn,.text-box__length{
     transform: translateY(-50%);
+  }
+  .text-box__length{
+    margin-top: -.4em; 
   }
 }
