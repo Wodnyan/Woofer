@@ -1,0 +1,27 @@
+@import "../../../../_colors.scss";
+.settings-description{
+  height: 100%;
+  textarea{
+  padding: 1em;
+  width: 100%;
+  height: 75%;
+  resize: none;
+  font-size: 1.2em;
+  background-color: $rich-black;
+  color: #fff;
+  border: none;
+  border-top: 3px solid $green;
+  border-bottom: 3px solid $green;
+  }
+  .description-bottom{
+    height: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5em 1em;
+    background-color: $rich-black;
+    .char-counter{
+      color: black
+    }
+  }
+}
