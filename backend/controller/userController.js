@@ -11,7 +11,6 @@ module.exports = (app)=>{
   app.get("/api/woofer", (req, res)=>{
       Woof.find({}, null, {sort: "-postedOn"},(err, data)=>{
         if(err) console.error(err);
-        console.log(data)
         res.json(data);
       })
   })
@@ -38,7 +37,6 @@ module.exports = (app)=>{
   //Save Woofs
   app.post("/woofer", (req, res)=>{
     const {username, woof, postedOn} = req.body;
-    console.log(req.body);
      new Woof({user: username, woof: woof, postedOn:  postedOn}).save((err)=>{
        if(err) console.error(err);
        res.json({foo: "bar"})
@@ -59,7 +57,6 @@ module.exports = (app)=>{
       User.findOne({username: username}, async (err, data)=>{
         if(err) console.log("Foo")
         else if(!data){
-          console.log(data);
             res.json({
               error: "No such username"
             })
@@ -99,7 +96,6 @@ module.exports = (app)=>{
   })
   //Delete cookie on logout
   app.post("/cookie", (req, res) => {
-    console.log(req.body)
     res.cookie("token", "", {expires: new Date(Date.now() + 100)})
     res.send("Cookie Deleted")
   })

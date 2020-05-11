@@ -6,7 +6,7 @@ import style from "./App.scss"
 //Components
 import Login from "./components/auth/Login.jsx"
 import SignUp from "./components/auth/SignUp.jsx"
-//TODO: make this one component
+//TODO: make Header one component
 import Header from "./components/main/nav/Header.jsx"
 import Nav from "./components/main/nav/Nav.jsx"
 import ProtectedComponent from "./components/ProtectedComponent.jsx"

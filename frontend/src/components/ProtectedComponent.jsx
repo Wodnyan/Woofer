@@ -15,20 +15,13 @@ export default function ProtectedComponent(props){
     const {verified, token, username} = getData.data;
     setUsername(username);
     setAuth(verified);
+    if(!verified) setRedirect(true)
   }
   useEffect(() => {
-    let timeout;
-    if(!auth){
-       timeout = setTimeout(function () {
-        setRedirect(true);
-      }, 1500)
-    }
     source.cancel();
-    return () => {
-      clearTimeout(timeout)
-    }
+    return () => source.cancel()
   })
-
+  console.log(auth)
   if(redirect) return  <Redirect to="/account/login"/>
   if(!auth){
     getToken();

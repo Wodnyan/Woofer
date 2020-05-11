@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from "axios"
+import style from "./style/Description.scss"
 export default function Description(props) {
   const [textAreaValue, setTextareaValue] = useState("")
   const handleChange = (e) => {
@@ -20,7 +21,10 @@ export default function Description(props) {
   return (
     <div className="settings-description">
       <textarea placeholder="Describe yourself here..." onChange={handleChange} value={textAreaValue}/>
-      <button onClick={handleClick}>Submit</button>
+      <div className="description-bottom">
+        <div className="char-counter">0/250</div>
+        <button className="description-btn" onClick={handleClick}>Submit</button>
+      </div>
     </div>
   )
 }

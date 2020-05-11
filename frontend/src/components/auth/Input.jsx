@@ -2,7 +2,7 @@ import React from "react";
 import {Link, Redirect} from "react-router-dom"
 import style from "./styles/Input.scss"
 import axios from "axios"
-
+//TODO: Make this a functional component
 export default class Input extends React.Component{
   constructor(props){
     super(props)

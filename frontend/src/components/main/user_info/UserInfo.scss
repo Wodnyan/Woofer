@@ -1,0 +1,11 @@
+.user-info-container{
+  position: absolute;
+  padding: .5em;
+  max-width: 23%;
+  .user__username{
+    font-size: 2em;
+  }
+  .user__description{
+    opacity: .5
+  }
+}
