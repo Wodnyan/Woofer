@@ -1,6 +1,7 @@
 import React from 'react';
 import Description from "./Description.jsx"
 import ExpandingCard from "../expanding_card/ExpandingCard.jsx"
+import TextBox from "../nav/TextBox.jsx"
 //TODO: Light mode
 //TODO: Make ExpandingCards
 function Settings(props){
