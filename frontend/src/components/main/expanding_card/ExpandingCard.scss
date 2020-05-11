@@ -1,0 +1,27 @@
+@import "../../../_colors.scss";
+.expanding-card-container{
+  width: 40%;
+  margin: 0 auto;
+  border: 3px solid $green;
+}
+.expanding-title{
+  padding: .3em;
+}
+.expanding-children{
+  height: 0;
+  overflow: hidden;
+  line-height: 0;
+  transition: height .2s ease;
+  background-color: #fff;
+}
+.expanding-children--visible{
+  height: 200px;
+  overflow: visible;
+  line-height: 1;
+}
+.expanding-title{
+  cursor: pointer;
+}
+.foo{
+  display: none;
+}
