@@ -16,7 +16,7 @@ import NotFound from "./components/main/not_found/NotFound.jsx"
 import LandingPage from "./components/main/landing_page/LandingPage.jsx"
 import Settings from "./components/main/settings/Settings.jsx"
 function App() {
-  const [username, setUsername] = useState("USER");
+  const [username, setUsername] = useState("");
   const [auth, setAuth] = useState(false);
   return (
     <Router>
