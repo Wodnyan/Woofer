@@ -1,9 +1,9 @@
 require("dotenv").config()
-const userController = require("./controller/userController");
+const userController = require("./controllers/userController");
+const woofController = require("./controllers/woofController");
 const cookieParser = require("cookie-parser")
 const express = require("express");
 const app = express();
-const cors = require("cors");
 const port = 3000;
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Credentials', true);
@@ -15,7 +15,14 @@ app.use(function(req, res, next) {
 app.use(express.json());
 app.use(cookieParser())
 //Server
-app.listen(port, ()=>{
+let server = app.listen(port, ()=>{
   console.log(`Server is listening on port ${port}`)
 })
+//Controllers
+woofController(app)
 userController(app)
+//Socket
+const io = require("socket.io")(server)
+io.on("connection", client => {
+  console.log("User Connected")
+})

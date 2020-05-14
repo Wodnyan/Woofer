@@ -1,6 +1,7 @@
 import React from 'react';
 import "./style/TextBox.scss";
 import useSendTextAreaValue from "../../../hooks/useSendTextAreaValue.jsx"
+import CharCounter from "../char_counter/CharCounter.jsx"
 import axios from "axios";
 
 export default function TextBox(props){
@@ -19,7 +20,7 @@ export default function TextBox(props){
       <div className="text-box">
         <textarea className="text-box__textarea" onChange={handleChange} value={textAreaValue} placeholder="Write your woof here..."/>
         <button className="text-box__btn" onClick={() => handleClick(url, data, woofLimit)}>Submit Woof</button>
-        <p className="text-box__length" style={{color: `${textLength > woofLimit ? "red": "inherit"}`}}>{textLength}/{woofLimit}</p>
+        <CharCounter length={textLength} limit={woofLimit} style="foo" />
       </div>
     </div>
   )

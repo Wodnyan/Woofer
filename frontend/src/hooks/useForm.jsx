@@ -19,6 +19,13 @@ export default function useForm(numberOfInputs) {
       setError("All inputs are required")
       return;
     }
+    //Check for only whitespace characters
+    //in the input fields
+    if(Object.values(state).join("").trim().length === 0){
+      setError("You're a cheeky one aren't ya?")
+      return;
+    }
+
     axios
       .post(url, state, {withCredentials: true})
       .then(res => {
@@ -26,7 +33,7 @@ export default function useForm(numberOfInputs) {
         if(error) setError(error) 
         else{
           console.log(username)
-          setRedirect(true)
+          //setRedirect(true)
         }
       })
   }
