@@ -1,0 +1,42 @@
+$switch-width: 70px;
+$circle-size: 28px;
+.switch{
+  position: relative;
+  display: inline-block;
+  width: $switch-width;
+  height: 30px;
+  input{
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  input:checked + .slider::after{
+    //Color of the circle here
+    transform: translate( 36px, -50%)
+  }
+  input:checked + .slider{
+    //Background color here
+  }
+  .slider{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #ddd;
+    border-radius: 2em;
+    cursor: pointer;
+    &::after{
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 3px;
+      bottom: 50%;
+      transform: translateY(-50%);
+      width: $circle-size;
+      height: $circle-size;
+      border-radius: 50%;
+      background-color: #000;
+      transition: transform .3s ease;
+    }
+  }
+}

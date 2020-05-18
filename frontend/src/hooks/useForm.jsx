@@ -32,8 +32,7 @@ export default function useForm(numberOfInputs) {
         const {error, username} = res.data;
         if(error) setError(error) 
         else{
-          console.log(username)
-          //setRedirect(true)
+          setRedirect(true)
         }
       })
   }

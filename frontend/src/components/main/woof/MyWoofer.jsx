@@ -34,7 +34,6 @@ export default function MyWoofer(props){
   const temp = woof.map((ss)=>{
     return <Content key={ss._id} woof={ss.woof} user={ss.user} postedOn={ss.postedOn}/>;
   })
-  // return temp;
   if(woof.length < 0) return <Load />
   else{
     return (

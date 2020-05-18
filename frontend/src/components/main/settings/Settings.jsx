@@ -1,7 +1,7 @@
 import React from 'react';
 import Description from "./Description.jsx"
 import ExpandingCard from "../expanding_card/ExpandingCard.jsx"
-import TextBox from "../nav/TextBox.jsx"
+import Switch from "../switch/Switch.jsx"
 //TODO: Light mode
 function Settings(props){
   return (
@@ -10,7 +10,8 @@ function Settings(props){
         <Description />
       </ExpandingCard>
       <ExpandingCard cardName={"Light Mode"}>
-        <Description />
+        <h1 style={{color: "black"}}>Switch to light mode</h1>
+        <Switch />
       </ExpandingCard>
     </div>
   )

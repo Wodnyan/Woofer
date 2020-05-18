@@ -1,12 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom"
-import axios from "axios"
 //Style
 import style from "./App.scss"
 //Components
 import Login from "./components/auth/Login.jsx"
 import SignUp from "./components/auth/SignUp.jsx"
-//TODO: make Header one component
 import Header from "./components/main/nav/Header.jsx"
 import Nav from "./components/main/nav/Nav.jsx"
 import ProtectedComponent from "./components/ProtectedComponent.jsx"
@@ -15,6 +13,8 @@ import MyWoofer from "./components/main/woof/MyWoofer.jsx"
 import NotFound from "./components/main/not_found/NotFound.jsx"
 import LandingPage from "./components/main/landing_page/LandingPage.jsx"
 import Settings from "./components/main/settings/Settings.jsx"
+import SwitchSlider from "./components/main/switch/Switch.jsx"
+
 function App() {
   const [username, setUsername] = useState("");
   const [auth, setAuth] = useState(false);
@@ -23,6 +23,9 @@ function App() {
       <Switch>
         <Route exact path="/">
           <LandingPage />
+        </Route>
+        <Route exact path="/dev">
+          <SwitchSlider />
         </Route>
         <Route path="/woofer">
           <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>
@@ -69,5 +72,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;
