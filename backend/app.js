@@ -1,6 +1,8 @@
 require("dotenv").config()
 const userController = require("./controllers/userController");
+const handleSocket = require("./socket/handleSocket");
 const woofController = require("./controllers/woofController");
+const io = require("socket.io")
 const cookieParser = require("cookie-parser")
 const express = require("express");
 const app = express();
@@ -16,13 +18,10 @@ app.use(express.json());
 app.use(cookieParser())
 //Server
 let server = app.listen(port, ()=>{
-  console.log(`Server is listening on port ${port}`)
+	console.log(`Server is listening on port ${port}`)
 })
+//Socket
+handleSocket(io, server)
 //Controllers
 woofController(app)
 userController(app)
-//Socket
-const io = require("socket.io")(server)
-io.on("connection", client => {
-  console.log("User Connected")
-})

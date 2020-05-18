@@ -21,7 +21,6 @@ export default function ProtectedComponent(props){
     source.cancel();
     return () => source.cancel()
   })
-  console.log(auth)
   if(redirect) return  <Redirect to="/account/login"/>
   if(!auth){
     getToken();

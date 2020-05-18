@@ -11,6 +11,7 @@ module.exports = (app)=>{
     User.updateOne({username: username}, {userInfo: {description: req.body.description}}, (err) => {
       if(err) console.error(err);
       console.log(`${username} changed their description`);
+      res.send("Description updated")
     })
   })
   //LOGIN
