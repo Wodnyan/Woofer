@@ -7,11 +7,11 @@
   height: 200px;
   resize: none;
   font-size: 1.2em;
-  background-color: $rich-black;
+  background-color: var(--main-color);
   color: #fff;
   border: none;
-  border-top: 3px solid $green;
-  border-bottom: 3px solid $green;
+  border-top: 3px solid var(--secondary-color);
+  border-bottom: 3px solid var(--secondary-color);
   }
   .description-bottom{
     height: 25px;
@@ -19,9 +19,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 1.5em;
-    background-color: $rich-black;
-    .char-counter{
-      color: black
-    }
+    background-color: var(--main-color);
+    color: var(--main-text-color);
   }
 }

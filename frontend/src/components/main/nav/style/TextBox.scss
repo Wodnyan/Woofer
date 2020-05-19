@@ -2,7 +2,7 @@
 .text-box-container{
   text-align: center;
   .text-box{
-    background-color: $green;
+    background-color: var(--secondary-color);
     padding: .7em .7em 0em .7em;
     border-radius: 1.5em;
   }
@@ -14,7 +14,7 @@
     border-top: 0px;
     border-left: .8em solid transparent;
     border-right: .8em solid transparent;
-    border-bottom: .8em solid $green;
+    border-bottom: .8em solid var(--secondary-color);
   }
   .text-box__textarea{
     resize: none;
@@ -29,13 +29,13 @@
     background: $yellow;
     color: #fff;
     padding: .8em 2em;
-    border: 2px solid $yellow;
+    border: 2px solid var(--tertiary-color);
     border-radius: 2em;
     cursor: pointer;
     transition:background-color .2s ease-out;
     &:hover{
       background-color: #fff;
-      color: $yellow;
+      color: var(--tertiary-color);
     }
   }
   .text-box__btn,.text-box__length{
