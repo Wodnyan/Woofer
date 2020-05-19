@@ -1,6 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-@import "_colors.scss";
-
 *,*::after,*::before{
   padding: 0;
   margin: 0;
@@ -13,8 +11,8 @@ body,html{
 }
 
 body{
-  background-color: $rich-black;
-  color: #fff;
+  background-color: var(--main-color);
+  color: var(--main-text-color);
 }
 
 ul{

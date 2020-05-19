@@ -7,7 +7,6 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    // width: 100%;
     height: 100%;
     z-index: -50;
     img{
@@ -35,7 +34,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba($rich-black, .3);
+      background-color: rgba( #222629, .3);
     }
   }
 
@@ -45,16 +44,9 @@
     flex-direction: column;
     margin-left: 3em;
     height: 100%;
-
-    .hero__title,
-    .hero__txt{
-      text-shadow: 2px 2px 5px $rich-black;
-    }
-
     .hero__title{
       font-size: 4em;
     }
-
     .hero__txt{
       margin-bottom: .7em;
       width: 40%;
@@ -67,14 +59,14 @@
     width: 12em;
     font-size: 1.2em;
     border-radius: 2em;
-    color: #fff;
-    background-color: $green;
+    color: var(--main-text-color);
+    background-color: var(--secondary-color);
     text-align: center;
     text-decoration: none;
     transition: background-color .2s ease; 
 
     &:hover{
-      background-color: $yellow;
+      background-color: var(--tertiary-color);
     }
   }
 }

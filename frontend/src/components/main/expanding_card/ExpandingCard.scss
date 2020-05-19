@@ -2,20 +2,24 @@
 .expanding-card-container{
   width: 40%;
   margin: 0 auto;
-  border: 3px solid $green;
-}
-.expanding-title{
-  padding: .3em;
-}
-.expanding-children{
-  height: 0;
-  overflow: hidden;
-  transition: height .2s ease;
-  background-color: #fff;
-}
-.expanding-title{
-  cursor: pointer;
-}
-.foo{
-  display: none;
+  border: 3px solid var(--secondary-color);
+  .expanding-top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em;
+    cursor: pointer;
+    .chevron{
+      transition: transform .2s ease;
+    }
+    .chevron.chevron--active{
+      transform: rotate(180deg)
+    }
+  }
+  .expanding-children{
+    height: 0;
+    overflow: hidden;
+    transition: height .2s ease;
+    background-color: var(--main-text-color);
+  }
 }

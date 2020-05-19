@@ -63,12 +63,12 @@
       border-radius: 2em;
       border: none;
       background-color: $yellow;
-      color: #fff;
+      color: var(--main-text-color);
       text-decoration: none;
       cursor: pointer;
     }
   }
   .usr-q a{
-    color: $green;
+    color: var(--secondary-color);
   }
 }
