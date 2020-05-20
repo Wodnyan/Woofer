@@ -44,6 +44,7 @@
     flex-direction: column;
     margin-left: 3em;
     height: 100%;
+    color: #fff;
     .hero__title{
       font-size: 4em;
     }
@@ -59,14 +60,14 @@
     width: 12em;
     font-size: 1.2em;
     border-radius: 2em;
-    color: var(--main-text-color);
-    background-color: var(--secondary-color);
+    color: #fff;
+    background-color: $green;
     text-align: center;
     text-decoration: none;
     transition: background-color .2s ease; 
 
     &:hover{
-      background-color: var(--tertiary-color);
+      background-color: $yellow;
     }
   }
 }
