@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom"
 import {ThemeProvider, createGlobalStyle} from "styled-components"
 //Style
@@ -31,6 +31,11 @@ function App() {
   const [username, setUsername] = useState("");
   const [auth, setAuth] = useState(false);
   const [darkMode, setDarkMode] = useState(true)
+  useEffect(() => {
+    const isDarkMode = JSON.parse(localStorage.getItem("darkMode"));
+    if(isDarkMode === null) return;
+    setDarkMode(isDarkMode)
+  }, [])
   return (
     <ThemeProvider theme={{darkMode}}>
       <GlobalStyle />
