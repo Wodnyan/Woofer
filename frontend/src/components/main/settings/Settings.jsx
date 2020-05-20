@@ -5,6 +5,12 @@ import SwitchSlider from "../switch/Switch.jsx"
 //TODO: Light mode
 function Settings(props){
   const {setDarkMode, darkMode} = props;
+  const handleClick = () => {
+    setDarkMode(prevState => {
+      localStorage.setItem("darkMode", !prevState)
+      return !prevState
+    });
+  }
   return (
     <div style={{marginTop: "80px"}}>
       <ExpandingCard cardName={"Description"}>
@@ -12,7 +18,7 @@ function Settings(props){
       </ExpandingCard>
       <ExpandingCard cardName={"Light Mode"}>
         <h1 style={{color: "black"}}>Switch to light mode</h1>
-        <SwitchSlider handleClick={() => setDarkMode(prevState => !prevState)} defaultValue={darkMode}/>
+        <SwitchSlider handleClick={handleClick} defaultValue={darkMode}/>
       </ExpandingCard>
       <ExpandingCard cardName={"Profile picture"}>
         <div>
