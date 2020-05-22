@@ -13,19 +13,18 @@ module.exports = (app) => {
   app.post("/api/woofer/user", async (req, res)=>{
     const {username} = req.body;
       User.findOne({username}, (err, userData) => {
-        if(err) console.error(err);
-        const {userInfo} = userData;
-        if(userData) {
-            Woof.find({user: username}, null, {sort: "-postedOn"}, (err, data)=>{
-              if(err) console.error(err);
-              res.json({
-                userInfo,
-                woofs: data
-              })
+        try{
+          const {userInfo} = userData;
+          Woof.find({user: username}, null, {sort: "-postedOn"}, (err, data)=>{
+            if(err) console.error(err);
+            res.json({
+              userInfo,
+              woofs: data
             })
+          })
         }
-        else {
-            res.status(401).send({error: "You don't have access to this page"})
+        catch{
+          res.sendStatus(404)
         }
     })
   })

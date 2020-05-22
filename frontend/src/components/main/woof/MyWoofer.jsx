@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {Redirect} from "react-router-dom"
 import Content from "./Content.jsx"
 import Load from "../load/Load.jsx"
 import UserInfo from "../user_info/UserInfo.jsx"
@@ -6,6 +7,7 @@ import axios from "axios"
 
 export default function MyWoofer(props){
   const url = "http://localhost:3000/api/woofer/user"
+  const [redirect, setRedirect] = useState(false);
   const [woof, setWoof] = useState([]);
   const [description, setDescription] = useState("");  
   useEffect(()=>{
@@ -25,7 +27,7 @@ export default function MyWoofer(props){
       })
       .catch((err) => {
         if(axios.isCancel(err)) return;
-        console.error(err);
+        setRedirect(true);
       })
     return () => {
       source.cancel();
@@ -34,6 +36,7 @@ export default function MyWoofer(props){
   const temp = woof.map((ss)=>{
     return <Content key={ss._id} woof={ss.woof} user={ss.user} postedOn={ss.postedOn}/>;
   })
+  if(redirect) return <Redirect exact to="/404"/>
   return (
     <>
       {(woof.length < 0) && <Load />}

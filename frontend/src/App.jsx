@@ -46,9 +46,22 @@ function App() {
           <Route exact path="/">
             <LandingPage />
           </Route>
-          <Route exact path="/dev">
-            <DeleteUserPrompt />
-          </Route>
+          <Route path="/user/:user" 
+          component={(props) => {
+            const {user} = props.match.params;
+            return (
+              <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>
+                <Header>
+                  {username}
+                  <h1 className="header__title">Woofer</h1>
+                  <Nav username={username} type={"All Woofs"} setAuth={setAuth} />
+                </Header>
+                <section className="woof-section">
+                  <MyWoofer username={user} />
+                </section>
+              </ProtectedComponent>
+            )
+          }}/>
           <Route path="/woofer">
             <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>
               <Header>
