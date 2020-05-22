@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link, Redirect} from "react-router-dom"
+import {Link} from "react-router-dom"
 import TextBox from "./TextBox.jsx"
 import Dropdown from "./Dropdown.jsx"
 import Logout from "./Logout.jsx"
@@ -7,8 +7,8 @@ import cogSvg from "./imgs/symbol.svg"
 import pawSvg from "./imgs/dog-paw.svg"
 
 export default function Nav(props){
-  const path = props.type === "My Woofs" ? "/my-woofs" : "/woofer"
-  const {setAuth} = props;
+  const {setAuth, username} = props;
+  const path = props.type === "My Woofs" ? `/user/${username}` : "/woofer"
   return(
     <nav className="nav-container">
       <ul>
@@ -30,13 +30,12 @@ export default function Nav(props){
           </ul>
         </Dropdown>
         <Dropdown dropDownTitle="Write a Woof">
-          <TextBox username={props.username}/>
+          <TextBox username={username}/>
         </Dropdown>
         <li>
           <Logout setAuth={setAuth}/>
         </li>
       </ul>
-      {false && <Redirect to="/account/login"/>}
     </nav>
   )
 }
