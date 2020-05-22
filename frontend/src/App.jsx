@@ -14,7 +14,8 @@ import MyWoofer from "./components/main/woof/MyWoofer.jsx"
 import NotFound from "./components/main/not_found/NotFound.jsx"
 import LandingPage from "./components/main/landing_page/LandingPage.jsx"
 import Settings from "./components/main/settings/Settings.jsx"
-import SwitchSlider from "./components/main/switch/Switch.jsx"
+//Delete this
+import DeleteUserPrompt from "./components/main/delete_user_prompt/DeleteUserPrompt.jsx"
 //Make these values global so everything changes;
 const GlobalStyle = createGlobalStyle`
   :root{
@@ -24,6 +25,7 @@ const GlobalStyle = createGlobalStyle`
     --tertiary-color: #86c232
   }
   body{
+    background-color: var(--main-color);
     color: var(--main-text-color);
   }
 `
@@ -45,7 +47,7 @@ function App() {
             <LandingPage />
           </Route>
           <Route exact path="/dev">
-            <SwitchSlider />
+            <DeleteUserPrompt />
           </Route>
           <Route path="/woofer">
             <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>

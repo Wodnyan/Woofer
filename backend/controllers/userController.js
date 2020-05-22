@@ -4,6 +4,17 @@ const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 
 module.exports = (app)=>{
+  //Delete User
+  app.delete("/user/delete", (req, res) => {
+    const token = req.cookies.token;
+    const {username} = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    User.deleteOne({username}, (err) => {
+      if(err) res.send("Error")
+      res.cookie("token", "", {expires: new Date(Date.now() + 100)})
+      console.log(`${username} deleted their account`)
+      res.send("Deleted Account")
+    }) 
+  })
   //User Descriptions
   app.post("/user/description", (req, res) => {
     const token = req.cookies.token;

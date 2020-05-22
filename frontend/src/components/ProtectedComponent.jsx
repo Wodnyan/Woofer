@@ -2,7 +2,10 @@ import React, {useEffect, useState} from 'react'
 import {Redirect} from "react-router-dom"
 import Load from "./main/load/Load.jsx"
 import axios, {CancelToken} from "axios"
-
+function displayLoader(auth, func) {
+  func();
+  return auth ? null : <Load />
+}
 export default function ProtectedComponent(props){
   //State
   const [redirect, setRedirect] = useState(false);
@@ -22,9 +25,10 @@ export default function ProtectedComponent(props){
     return () => source.cancel()
   })
   if(redirect) return  <Redirect to="/account/login"/>
-  if(!auth){
-    getToken();
-    return <Load />
-  }
-  else return props.children;
+  else return (
+    <>
+      {displayLoader(auth, getToken)}
+      {props.children}
+    </>
+  ) 
 }

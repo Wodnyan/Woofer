@@ -16,7 +16,7 @@ export default function TextBox(props){
   }
   return(
     <div className="text-box-container">
-      <div className="text-box-arrow-up"></div>
+      <div className="arrow-up"></div>
       <div className="text-box">
         <textarea className="text-box__textarea" onChange={handleChange} value={textAreaValue} placeholder="Write your woof here..."/>
         <button className="text-box__btn" onClick={() => handleClick(url, data, woofLimit)}>Submit Woof</button>
