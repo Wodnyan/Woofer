@@ -1,21 +1,21 @@
 .loader-container{
-  height: 100vh;
   display: flex;
-  width: 20%;
-  margin: 0 auto;
   justify-content: space-around;
   align-items: center;
+  height: 100vh;
+  width: 20%;
+  margin: 0 auto;
+  background-color: var(--main-color);
 }
 .loader__bubble{
-  background-color: #fff;
   width: 3em;
   height: 3em;
   border-radius: 50%;
   transform: translateY(20px);
+  background-color: var(--main-text-color);
   // animation: animateBubble .2s ease-in infinite .2s;
   animation: animateBubble 1.7s infinite .2s;
   animation-timing-function: cubic-bezier(.46,.03,.52,.96);
-
 }
 .loader__bubble--1{
   animation-delay: 0s;

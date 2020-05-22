@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from "react-router-dom"
-import hero from "./imgs/woof-bg.jpg"
+import hero from "./imgs/woof-bg-min.jpg"
 import squiggle from "./imgs/squiggle.svg"
 import style from "./style/LandingPage.scss"
 export default function LandingPage(){

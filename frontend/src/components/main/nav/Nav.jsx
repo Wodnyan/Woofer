@@ -13,15 +13,20 @@ export default function Nav(props){
     <nav className="nav-container">
       <ul>
         <Dropdown dropDownTitle="User">
+          <div className="arrow-up"></div>
           <ul className="user-options">
-            <Link to={path} className="user-options__item">
-              <img className="options__logo" src={pawSvg}></img>
-              <h1 className="options__name">{props.type}</h1>
-            </Link>
-            <Link to="/settings" className="user-options__item">
-              <img className="options__logo" src={cogSvg}></img>
-              <h1 className="options__name">Settings</h1>
-            </Link>
+            <li>
+              <Link to={path} className="user-options__item">
+                <img className="options__logo" src={pawSvg}></img>
+                <h1 className="options__name">{props.type}</h1>
+              </Link>
+            </li>
+            <li>
+              <Link to="/settings" className="user-options__item">
+                <img className="options__logo" src={cogSvg}></img>
+                <h1 className="options__name">Settings</h1>
+              </Link>
+            </li>
           </ul>
         </Dropdown>
         <Dropdown dropDownTitle="Write a Woof">

@@ -6,16 +6,6 @@
     padding: .7em .7em 0em .7em;
     border-radius: 1.5em;
   }
-  .text-box-arrow-up{
-    margin: 0 auto;
-    transform: translateY(2px);
-    width: 0;
-    height: 0;
-    border-top: 0px;
-    border-left: .8em solid transparent;
-    border-right: .8em solid transparent;
-    border-bottom: .8em solid var(--secondary-color);
-  }
   .text-box__textarea{
     resize: none;
     width: 20vw;

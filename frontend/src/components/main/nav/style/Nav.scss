@@ -17,13 +17,22 @@
   .nav-container{
     justify-self: end;
     align-self: center;
-
     ul{
       display: flex;
       align-items: center;
       li{
         margin-right: 2em;
       }
+    }
+    .arrow-up{
+      margin: 0 auto;
+      transform: translateY(2px);
+      width: 0;
+      height: 0;
+      border-top: 0px;
+      border-left: .8em solid transparent;
+      border-right: .8em solid transparent;
+      border-bottom: .8em solid var(--secondary-color);
     }
   }
   ul.user-options{
@@ -54,7 +63,8 @@
       .options__logo{
         width: 30px;
         margin-right: .4em;
-        filter: invert(100%) sepia(5%) saturate(731%) hue-rotate(291deg) brightness(112%) contrast(100%);//Make the SVG white
+        //Make the SVG white
+        filter: invert(100%) sepia(5%) saturate(731%) hue-rotate(291deg) brightness(112%) contrast(100%);
       }
       &:hover{
         background-color: var(--tertiary-color);

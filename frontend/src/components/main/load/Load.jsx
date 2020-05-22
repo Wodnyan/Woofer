@@ -1,5 +1,5 @@
-import React from 'react';
-import style from "./Load.scss";
+import React from 'react'
+import "./Load.scss"
 export default function Load(props){
   return(
     <div className="loader-container">
