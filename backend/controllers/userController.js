@@ -1,4 +1,4 @@
-const {User} = require("../database/database.js");
+const {User, JWTRefresh} = require("../database/database.js");
 const {hash, compare} = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
@@ -41,6 +41,12 @@ module.exports = (app)=>{
               if(!passIsCorrect) res.json({error: "Incorrect Password"})
               else{
                 const token = createToken({username});
+                //Schema jwtToken:String
+                const refreshToken = jwt.sign({username}, process.env.REFRESH_TOKEN_SECRET);
+                new JWTRefresh({jwtToken: refreshToken}).save((err) => {
+                  if(err) console.err(err);
+                })
+                res.cookie("refreshToken", refreshToken, {httpOnly: true});
                 res.cookie("token", token, {httpOnly: true});
                 res.json({username})
                 console.log(`${username} logged in`);
@@ -65,17 +71,28 @@ module.exports = (app)=>{
       username
     }
     const token = createToken(user);
-    res.cookie("token", token, {httpOnly: false});
+    const refreshToken = jwt.sign( user, process.env.REFRESH_TOKEN_SECRET);
+    new JWTRefresh({jwtToken: refreshToken}).save((err) => {
+      if(err) console.err(err);
+    })
+    res.cookie("refreshToken", refreshToken, {httpOnly: true});
+    res.cookie("token", token, {httpOnly: true});
     res.json({user})
   })
   //Delete cookie on logout
-  app.post("/cookie", (req, res) => {
-    res.cookie("token", "", {expires: new Date(Date.now() + 100)})
-    res.send("Cookie Deleted")
+  app.delete("/logout", (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+    console.log(refreshToken)
+    JWTRefresh.deleteOne({jwtToken: refreshToken}, (err, data) => {
+      if(err) console.error(err)
+      res.cookie("token", "", {expires: new Date(Date.now() + 100)})
+      res.send(refreshToken)
+    })
   })
   //Check Auth
   app.post("/user/check", (req, res)=>{
     const token = req.cookies.token
+    if(!token) return res.json({verified: false})
     try{
       const verified = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
       if(verified){
@@ -87,7 +104,20 @@ module.exports = (app)=>{
       }
     }
     catch(err){
-      res.json({verified: false})
+      const refreshToken = req.cookies.refreshToken;
+      if(!refreshToken) return res.json({verified: false})
+      if(err.message === "jwt expired"){
+        JWTRefresh.findOne({jwtToken: refreshToken}, (err, token) => {
+          if(err) return res.json({verified: false})
+          jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, data) => {
+            if(err) res.json({verified: false})
+            const {username} = data;
+            const newToken = createToken({username}) 
+            res.cookie("token", newToken, {httpOnly: true})
+            res.json({verified: true})
+          })
+        })
+      }
     }
   })
 };
@@ -96,7 +126,7 @@ module.exports = (app)=>{
  TODO: Export these into a different file
 ***/
 function createToken(user){
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15m"});
 }
 //Middleware to check for duplicate usernames
 function checkUserName(req, res, next){

@@ -5,10 +5,11 @@ import axios from "axios"
 export default function Logout(props) {
   const {setAuth} = props;
   const handleClick = () => {
-    const url = "http://localhost:3000/cookie";
+    const url = "http://localhost:3000/logout";
     axios
-      .post(url, {}, {withCredentials: true})
+      .delete(url, {withCredentials: true})
       .then(res => {
+        console.log(res)
         setAuth(false);
       })
   }

@@ -27,6 +27,7 @@ export default function MyWoofer(props){
       })
       .catch((err) => {
         if(axios.isCancel(err)) return;
+        //Redirect if cannot find user
         setRedirect(true);
       })
     return () => {
@@ -37,9 +38,9 @@ export default function MyWoofer(props){
     return <Content key={ss._id} woof={ss.woof} user={ss.user} postedOn={ss.postedOn}/>;
   })
   if(redirect) return <Redirect exact to="/404"/>
+  if(woof.length === 0) return <Load />
   return (
     <>
-      {(woof.length < 0) && <Load />}
       <UserInfo username={props.username} description={description}/>
       {temp}
     </>
