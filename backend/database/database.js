@@ -16,9 +16,14 @@ const UserSchema = new Schema({
     description: String
   }
 })
+const JWTSchema = new Schema({
+  jwtToken: String 
+})
 const User = mongoose.model("Users", UserSchema);
 const Woof = mongoose.model("Woofs", WoofSchema);
+const JWTRefresh = mongoose.model("RefreshTokens", JWTSchema);
 module.exports = {
   User,
-  Woof
+  Woof,
+  JWTRefresh
 }
