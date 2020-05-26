@@ -9,7 +9,6 @@ export default function Logout(props) {
     axios
       .delete(url, {withCredentials: true})
       .then(res => {
-        console.log(res)
         setAuth(false);
       })
   }

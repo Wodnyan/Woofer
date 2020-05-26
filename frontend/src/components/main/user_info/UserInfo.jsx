@@ -2,7 +2,7 @@ import React from 'react';
 import img  from "../imgs/astronaut.svg"
 import style from "./UserInfo.scss"
 export default function UserInfo(props){
-    const {username, description} = props;
+  const {username, description} = props;
   return (
     <div className="user-info-container">
       <div className="user__prof-pic">

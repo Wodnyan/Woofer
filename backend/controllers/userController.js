@@ -1,9 +1,41 @@
 const {User, JWTRefresh} = require("../database/database.js");
+const multer = require("multer")
 const {hash, compare} = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
-
+const storage = multer.diskStorage({
+  destination: "public/uploads/",
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + "-" + Date.now() + "." + file.mimetype.split("/")[1])
+  }
+});
+const upload = multer({storage: storage})
 module.exports = (app)=>{
+  //Post Profile Picture
+  app.post("/upload/profile-picture", upload.single("image"), (req, res) => {
+    const {token} = req.cookies
+    const {path} = req.file
+    console.log(path)
+    try {
+      const {username} = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+      User.findOneAndUpdate({username: username}, {"userInfo.profilePicture": "FooBar"}, (err, doc) => {
+        if(err) console.error(err)
+        res.send("Success")
+      })
+    }
+    catch(err) {
+      console.error(err)
+    }
+  })
+  //Get Profile Picture Link
+  app.get("/user/profile-picture", (req, res) => {
+    const {token} = req.cookies;
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, data) => {
+      if(err) res.sendStatus(403)
+      //Check DB here
+      console.log(data) 
+    })
+  })
   //Delete User
   app.delete("/user/delete", (req, res) => {
     const token = req.cookies.token;
@@ -19,7 +51,7 @@ module.exports = (app)=>{
   app.post("/user/description", (req, res) => {
     const token = req.cookies.token;
     const {username} = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    User.updateOne({username: username}, {userInfo: {description: req.body.description}}, (err) => {
+    User.updateOne({username: username}, {"userInfo.description": req.body.description}, (err, data) => {
       if(err) console.error(err);
       console.log(`${username} changed their description`);
       res.send("Description updated")

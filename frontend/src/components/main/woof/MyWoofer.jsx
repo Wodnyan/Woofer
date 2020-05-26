@@ -27,7 +27,6 @@ export default function MyWoofer(props){
       })
       .catch((err) => {
         if(axios.isCancel(err)) return;
-        //Redirect if cannot find user
         setRedirect(true);
       })
     return () => {
