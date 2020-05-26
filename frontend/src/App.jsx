@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom"
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
 import {ThemeProvider, createGlobalStyle} from "styled-components"
 //Style
 import "./App.scss"
@@ -15,7 +15,7 @@ import NotFound from "./components/main/not_found/NotFound.jsx"
 import LandingPage from "./components/main/landing_page/LandingPage.jsx"
 import Settings from "./components/main/settings/Settings.jsx"
 //Delete this
-import DeleteUserPrompt from "./components/main/delete_user_prompt/DeleteUserPrompt.jsx"
+import UploadPictureForm from "./components/main/upload_picture_form/UploadPictureForm.jsx"
 //Make these values global so everything changes;
 const GlobalStyle = createGlobalStyle`
   :root{
@@ -45,6 +45,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <LandingPage />
+          </Route>
+          <Route exact path="/dev">
+            <UploadPictureForm />
           </Route>
           <Route path="/user/:user" 
           component={(props) => {

@@ -3,6 +3,7 @@ import Description from "./Description.jsx"
 import ExpandingCard from "../expanding_card/ExpandingCard.jsx"
 import SwitchSlider from "../switch/Switch.jsx"
 import DeleteUserPrompt from "../delete_user_prompt/DeleteUserPrompt.jsx"
+import UploadPictureForm from "../upload_picture_form/UploadPictureForm.jsx"
 function Settings(props){
   const {setDarkMode, darkMode} = props;
   const [prompt, setPrompt] = useState(false);
@@ -23,9 +24,7 @@ function Settings(props){
         <SwitchSlider handleClick={handleClick} defaultValue={darkMode}/>
       </ExpandingCard>
       <ExpandingCard cardName={"Profile picture"}>
-        <div>
-          <h1>Change your profile picture</h1>
-        </div>
+        <UploadPictureForm />
       </ExpandingCard>
       <ExpandingCard cardName={"Delete Account"}>
         <div>
