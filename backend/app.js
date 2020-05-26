@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser")
 const express = require("express");
 const app = express();
 const port = 3000;
+app.use("/public", express.static("public"))
 app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Credentials', true);
   res.header('Access-Control-Allow-Origin', req.headers.origin);

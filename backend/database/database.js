@@ -3,6 +3,7 @@ mongoose.connect("mongodb+srv://user:user@my-cluster-jv3bc.mongodb.net/woofer?re
   if(err) console.error(err);
   console.log("Connected to Database");
 })
+mongoose.set('useFindAndModify', false);
 const Schema = mongoose.Schema;
 const WoofSchema = new Schema({
   user: String,
@@ -13,7 +14,8 @@ const UserSchema = new Schema({
   username: String,
   password: String,
   userInfo: {
-    description: String
+    description: String,
+    profilePicture: String
   }
 })
 const JWTSchema = new Schema({
