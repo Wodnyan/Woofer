@@ -1,14 +1,17 @@
 import React, {useState} from 'react';
-import "./style/Content.scss"
+import useGetProfilePicture from "../../../hooks/useGetProfilePicture.jsx"
 import {Link} from "react-router-dom"
-import profPic from "../imgs/astronaut.svg"
+import "./style/Content.scss"
+import img from "../imgs/astronaut.svg"
+
 export default function Content(props){
   const {woof, user, postedOn} = props;
+  const profilePic = useGetProfilePicture(user)
   return(
     <div className="woof-container">
       <Link to={`/user/${user}`}>
         <span className="woof__profile-pic">
-          <img src={profPic} alt="profile picture"></img>
+          <img src={profilePic ? profilePic : img} alt="profile picture"></img>
         </span>
       </Link>
       <span className="woof__user">{user}</span>
