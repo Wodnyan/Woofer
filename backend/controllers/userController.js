@@ -4,32 +4,57 @@ const {hash, compare} = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const saltRounds = 10;
+const maxImgSize = 200000;
 const storage = multer.diskStorage({
   destination: "public/uploads/",
   filename: (req, file, cb) => {
     cb(null, file.fieldname + "-" + Date.now() + "." + file.mimetype.split("/")[1])
   }
 });
-const upload = multer({storage: storage})
+const upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    const {mimetype} = file;
+    console.log(mimetype)
+    if(mimetype === "image/png" || mimetype === "image/jpeg") return cb(null, true) 
+    cb(new Error("File must be an image"))
+    cb(null, false)
+  },
+  limits: {
+    fileSize: maxImgSize
+  }
+})
+  .single("image")
 module.exports = (app)=>{
   //Post Profile Picture
-  app.post("/upload/profile-picture", upload.single("image"), (req, res) => {
-    const {token} = req.cookies
-    const {path} = req.file
-    console.log(path)
-    try {
-      const {username} = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-      User.findOneAndUpdate({username: username}, {"userInfo.profilePicture": path}, (err, doc) => {
-        if(err) console.error(err)
-        //Check for previous file
-          //delete file here
-        console.log(doc)
-        res.send("Success")
-      })
-    }
-    catch(err) {
-      console.error(err)
-    }
+  app.post("/upload/profile-picture", (req, res) => {
+    upload(req, res, err => {
+      if(err) {
+        if(err.message === "File too large") return res.send({error:`File can't be larget than ${maxImgSize / 1000}KB`})
+        if(err.message === "File must be an image") return res.send({error: err.message}) 
+      }
+      else{
+        const {token} = req.cookies
+        const {path} = req.file
+        try {
+          const {username} = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+          User.findOneAndUpdate({username: username}, {"userInfo.profilePicture": path}, (err, doc) => {
+            if(err) console.error(err)
+            const path = doc.userInfo.profilePicture;
+            if(path){
+              fs.unlink(path, (err) => {
+                if(err) console.log(err)
+                console.log("Successfully deleted")
+                res.send("Success")
+              })
+            }
+          })
+        }
+        catch(err) {
+          console.error(err)
+        }
+      }
+    })
   })
   //Send Profile Picture Link
   app.post("/user/profile-picture", (req, res) => {
@@ -38,7 +63,6 @@ module.exports = (app)=>{
       if(err) console.error(err)
       if(!data) return res.send(null)
       const {profilePicture} = data.userInfo;
-      console.log(profilePicture)
       return res.send(profilePicture);
     })
   })
@@ -135,6 +159,7 @@ module.exports = (app)=>{
       const refreshToken = req.cookies.refreshToken;
       if(!refreshToken) return res.json({verified: false})
       if(err.message === "invalid token") return deleteRefreshToken(refreshToken, res)
+        //Extract this
         JWTRefresh.findOne({jwtToken: refreshToken}, (err, token) => {
           if(!token) {
             return res.json({verified: false})
