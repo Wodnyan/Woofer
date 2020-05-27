@@ -13,7 +13,6 @@ function Settings(props){
       return !prevState
     });
   }
-  console.log(prompt)
   return (
     <div style={{marginTop: "80px"}}>
       <ExpandingCard cardName={"Description"}>
