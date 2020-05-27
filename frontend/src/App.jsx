@@ -14,8 +14,6 @@ import MyWoofer from "./components/main/woof/MyWoofer.jsx"
 import NotFound from "./components/main/not_found/NotFound.jsx"
 import LandingPage from "./components/main/landing_page/LandingPage.jsx"
 import Settings from "./components/main/settings/Settings.jsx"
-//Delete this
-import UploadPictureForm from "./components/main/upload_picture_form/UploadPictureForm.jsx"
 //Make these values global so everything changes;
 const GlobalStyle = createGlobalStyle`
   :root{
@@ -47,7 +45,6 @@ function App() {
             <LandingPage />
           </Route>
           <Route exact path="/dev">
-            <UploadPictureForm />
           </Route>
           <Route path="/user/:user" 
           component={(props) => {

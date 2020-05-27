@@ -23,7 +23,7 @@ export default function UploadPictureForm() {
   }
   return (
     <>
-      <input type="file" onChange={fileSelectedHandler} name="image"></input>
+      <input style={{color: "red"}}  type="file" onChange={fileSelectedHandler} name="image"></input>
       <button onClick={fileUploadHandler}>Upload ze file</button>
     </>
   ) 
