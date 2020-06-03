@@ -6,22 +6,11 @@ module.exports = (app) => {
   app.get("/api/woofer", async (req, res)=>{
     const {from, to, username} = req.query;
     if(username) {
-      try{
-        const data = await User.findOne({username})
-        const userInfo = {
-          username: data.username,
-          userInfo: data.userInfo
-        }
-        const woofs = await Woof.find({user: username}, null, {sort: "-postedOn"})
-        const slicedData = woofs.slice(from, to)
-        return res.json({
-          userInfo,
-          data: slicedData
-        })
-      }
-      catch(err) {
-        res.sendStatus(404)
-      }
+      const user = await User.findOne({username});
+      if(!user) return res.sendStatus(404)
+      const woofs = await Woof.find({user: username}, null, {sort: "-postedOn"});
+      const slicedData = woofs.slice(from, to);
+      return res.json(slicedData)
     }
     else{
       Woof.find({}, null, {sort: "-postedOn"},(err, data)=>{
@@ -30,25 +19,6 @@ module.exports = (app) => {
         return res.json(slicedData);
       })
     }
-  })
-  //Woofer Api for individual users
-  app.post("/api/woofer/user", async (req, res)=>{
-    const {username} = req.body;
-      User.findOne({username}, (err, userData) => {
-        try{
-          const {userInfo} = userData;
-          Woof.find({user: username}, null, {sort: "-postedOn"}, (err, data)=>{
-            if(err) console.error(err);
-            res.json({
-              userInfo,
-              woofs: data
-            })
-          })
-        }
-        catch{
-          res.sendStatus(404)
-        }
-    })
   })
   //Save Woofs
   app.post("/woofer", (req, res)=>{

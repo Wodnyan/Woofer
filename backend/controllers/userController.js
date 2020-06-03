@@ -77,7 +77,7 @@ module.exports = (app)=>{
       res.send("Deleted Account")
     }) 
   })
-  //User Descriptions
+  //Set User Descriptions
   app.post("/user/description", (req, res) => {
     const token = req.cookies.token;
     const {username} = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
@@ -85,6 +85,19 @@ module.exports = (app)=>{
       if(err) console.error(err);
       console.log(`${username} changed their description`);
       res.send("Description updated")
+    })
+  })
+  //Get User Description
+  app.get("/user/description", (req, res) => {
+    const {username} = req.query;
+    if(!username) return res.sendStatus(404)
+    User.findOne({username}, "userInfo", (err, data) => {
+      if(err) console.log(err)
+      if(!data) return res.sendStatus(404) 
+      else if(!data.userInfo.description) return res.send("No description has been set yet") 
+      else{
+        return res.send(data.userInfo.description)
+      }
     })
   })
   //LOGIN
