@@ -7,36 +7,51 @@ import NoContent from "../no_content/NoContent.jsx"
 import axios from "axios"
 
 export default function MyWoofer(props){
-  const url = "http://localhost:3000/api/woofer/user"
+  const loadMoreBy = 50; //The amount of content to be loaded
+  const {username} = props
   const [redirect, setRedirect] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  //Load more State
+  const [hasNextPage, setHasNextPage] = useState(true)
+  const [fromTo, setFromTo] = useState([0, loadMoreBy])
+  //Data
   const [woof, setWoof] = useState([]);
-  const [description, setDescription] = useState("");  
+  //Axios
+  const CancelToken = axios.CancelToken;
+  const source = CancelToken.source();
   useEffect(()=>{
-    const CancelToken = axios.CancelToken;
-    const source = CancelToken.source();
     axios
-      .post(url, {
-        username: props.username
-      }, {
+      .get(`http://localhost:3000/api/woofer?username=${username}&from=${fromTo[0]}&to=${fromTo[1]}`, {
         cancelToken: source.token
       })
       .then((resp) => {
-        const {woofs} = resp.data;
-        if(woofs.length === 0) setIsLoading(false)
-        const {description} = resp.data.userInfo;
-        setIsLoading(false)
-        setWoof(woofs);
-        setDescription(description)
+        if(resp.data) {
+          if(resp.data.length < loadMoreBy - 1) setHasNextPage(false)
+          setIsLoading(false)
+          setWoof(resp.data)
+          setFromTo(prevState => [prevState[1] + 1, prevState[1] + loadMoreBy])
+        }
       })
       .catch((err) => {
         if(axios.isCancel(err)) return;
-        setRedirect(true);
+        else{
+          console.log(err)
+          setRedirect(true);
+        }
       })
     return () => {
       source.cancel();
     }
   }, [])
+  const loadMore = () => {
+    setFromTo(prevState => [prevState[1], prevState[1] + loadMoreBy])
+    axios
+      .get(`http://localhost:3000/api/woofer?username=${username}&from=${fromTo[0]}&to=${fromTo[1]}`)
+      .then(resp => {
+        if(resp.data.length  < loadMoreBy - 1) setHasNextPage(false)
+        setWoof(prevState => woof.concat(resp.data))
+      })
+  }
   //Change the name of this variable
   const temp = woof.map((ss)=>{
     return <Content key={ss._id} woof={ss.woof} user={ss.user} postedOn={ss.postedOn}/>;
@@ -45,9 +60,10 @@ export default function MyWoofer(props){
   if(isLoading) return <Load />
   return (
     <>
-      <UserInfo username={props.username} description={description}/>
+      <UserInfo username={props.username} />
       {woof.length === 0 && <NoContent />}
       {temp}
+      {hasNextPage && <button onClick={loadMore}>Load more</button>}
     </>
   )
 }
