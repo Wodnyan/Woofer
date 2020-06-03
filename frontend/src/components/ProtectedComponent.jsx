@@ -23,7 +23,7 @@ export default function ProtectedComponent(props){
   useEffect(() => {
     source.cancel();
     return () => source.cancel()
-  })
+  }, [])
   if(redirect) return  <Redirect to="/account/login"/>
   else return (
     <>
