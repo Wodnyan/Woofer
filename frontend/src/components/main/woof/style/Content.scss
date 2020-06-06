@@ -2,7 +2,9 @@
   margin-top: 5em;
   .woof-container{
     width: 50%;
-    margin: 0 auto;
+    margin: 0 auto 25px;
+    padding: 1em;
+    border: 1px solid rgba(0, 0, 0, .2);
     .woof__user{
       font-size: 1.6em;
       margin-right: .3em;
@@ -33,6 +35,7 @@
     .woof-container{
       width: 100%;
       padding: 1em;
+      margin: 0 auto 15px;
     }
     .woof__date{
       font-size: .8em;

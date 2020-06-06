@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom"
+import {BrowserRouter as Router, Link, Switch, Route} from "react-router-dom"
 import {ThemeProvider, createGlobalStyle} from "styled-components"
 //Style
 import "./App.scss"
 //Components
 import Login from "./components/auth/Login.jsx"
 import SignUp from "./components/auth/SignUp.jsx"
-import Header from "./components/main/nav/Header.jsx"
 import Nav from "./components/main/nav/Nav.jsx"
 import ProtectedComponent from "./components/ProtectedComponent.jsx"
 import AllWoofer from "./components/main/woof/AllWoofer.jsx"
@@ -50,10 +49,10 @@ function App() {
             const {user} = props.match.params;
             return (
               <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>
-                <Header>
-                  <h1 className="header__title">Woofer</h1>
+                <header className="header">
+                  <Link to="/woofer" className="header__title">Woofer</Link>
                   <Nav username={username} type={"All Woofs"} setAuth={setAuth} />
-                </Header>
+                </header>
                 <section className="woof-section">
                   <MyWoofer username={user} />
                 </section>
@@ -62,10 +61,10 @@ function App() {
           }}/>
           <Route path="/woofer">
             <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>
-              <Header>
-                <h1 className="header__title">Woofer</h1>
+              <header className="header">
+                <Link to="/woofer" className="header__title">Woofer</Link>
                 <Nav username={username} type={"My Woofs"} setAuth={setAuth} />
-              </Header>
+              </header>
               <section className="woof-section">
                 <AllWoofer />
               </section>
@@ -73,10 +72,10 @@ function App() {
           </Route>
           <Route path="/my-woofs">
             <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>
-              <Header>
-                <h1 className="header__title">Woofer</h1>
+              <header className="header">
+                <Link to="/woofer" className="header__title">Woofer</Link>
                 <Nav username={username} type={"All Woofs"} setAuth={setAuth} />
-              </Header>
+              </header>
               <section className="woof-section">
                 <MyWoofer username={username} />
               </section>
@@ -90,11 +89,10 @@ function App() {
           </Route>
           <Route exact path="/settings">
             <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>
-              <Header>
-                {username}
-                <h1 className="header__title">Woofer</h1>
-                <Nav username={username} type={"All Woofs"} setAuth={setAuth} />
-              </Header>
+              <header className="header">
+                <Link to="/woofer" className="header__title">Woofer</Link>
+                <Nav username={username} type={"My Woofs"} setAuth={setAuth} />
+              </header>
               <Settings setDarkMode={setDarkMode} darkMode={darkMode}/>
             </ProtectedComponent>
           </Route>

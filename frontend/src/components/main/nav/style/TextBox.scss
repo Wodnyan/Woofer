@@ -6,6 +6,9 @@
     padding: .7em .7em 0em .7em;
     border-radius: 1.5em;
   }
+  .char_counter--text-box {
+    margin-top: -1em;
+  }
   .text-box__textarea{
     resize: none;
     width: 20vw;
@@ -33,6 +36,17 @@
   }
   .text-box__length{
     margin-top: -.4em; 
+  }
+}
+@media only screen and (min-width: 3000px) {
+  .text-box-container .text-box .text-box__textarea {
+    width: 17vw;
+    height: 40vh;
+  }
+}
+@media only screen and (min-width: 2000px) {
+  .text-box-container .text-box__textarea {
+    width: 17vw;
   }
 }
 @media only screen and (max-width: 760px) {

@@ -1,4 +1,5 @@
 import React from 'react'
+import style from "./style/Nav.scss"
 import {Link} from "react-router-dom"
 import TextBox from "./TextBox.jsx"
 import Dropdown from "./Dropdown.jsx"
@@ -21,11 +22,9 @@ export default function Nav(props){
                 <h1 className="options__name">Settings</h1>
               </Link>
             </li>
-            <li>
-              <Link to="/settings" className="user-options__item">
-                <img className="options__logo" src={cogSvg}></img>
-                <Logout setAuth={setAuth}/>
-              </Link>
+            <li className="user-options__item">
+              <img className="options__logo" src={cogSvg}></img>
+              <Logout setAuth={setAuth}/>
             </li>
           </ul>
         </Dropdown>
