@@ -38,3 +38,8 @@
     transform: translateY(20px);
   }
 }
+@media only screen and (max-width: 760px) {
+  .loader-container{
+    width: 60%;
+  }
+}

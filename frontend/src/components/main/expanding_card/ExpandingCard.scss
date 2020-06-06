@@ -23,3 +23,8 @@
     background-color: var(--main-text-color);
   }
 }
+@media only screen and (max-width: 760px) {
+  .expanding-card-container{
+    width: 100%;
+  }
+}

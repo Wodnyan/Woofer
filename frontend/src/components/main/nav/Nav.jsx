@@ -16,15 +16,15 @@ export default function Nav(props){
           <div className="arrow-up"></div>
           <ul className="user-options">
             <li>
-              <Link to={path} className="user-options__item">
-                <img className="options__logo" src={pawSvg}></img>
-                <h1 className="options__name">{props.type}</h1>
+              <Link to="/settings" className="user-options__item">
+                <img className="options__logo" src={cogSvg}></img>
+                <h1 className="options__name">Settings</h1>
               </Link>
             </li>
             <li>
               <Link to="/settings" className="user-options__item">
                 <img className="options__logo" src={cogSvg}></img>
-                <h1 className="options__name">Settings</h1>
+                <Logout setAuth={setAuth}/>
               </Link>
             </li>
           </ul>
@@ -33,7 +33,9 @@ export default function Nav(props){
           <TextBox username={username}/>
         </Dropdown>
         <li>
-          <Logout setAuth={setAuth}/>
+          <Link to={path} className="type-switch">
+            {props.type}
+          </Link>
         </li>
       </ul>
     </nav>

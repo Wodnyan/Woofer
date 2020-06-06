@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import "./style/load-more.scss"
 import Content from "./Content.jsx"
 import Load from "../load/Load.jsx"
 import axios from "axios"
@@ -50,7 +51,7 @@ export default function AllWoofer(props){
     return (
       <>
         {temp}
-        {hasNextPage && <button onClick={loadMore}>Load more</button>}
+        {hasNextPage && <button className="load-more-btn" onClick={loadMore}>Load more</button>}
       </>
     )
   }

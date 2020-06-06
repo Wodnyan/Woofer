@@ -12,5 +12,5 @@ export default function Logout(props) {
         setAuth(false);
       })
   }
-  return <Link to="/" onClick={handleClick}>Logout</Link>
+  return <Link to="/" style={{fontSize: "1.2em", fontWeight: "bolder"}} onClick={handleClick}>Logout</Link>
 }
