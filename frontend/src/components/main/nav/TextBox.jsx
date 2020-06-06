@@ -5,8 +5,8 @@ import CharCounter from "../char_counter/CharCounter.jsx"
 import axios from "axios";
 
 export default function TextBox(props){
-  const {textAreaValue ,handleClick, handleChange, textLength} = useSendTextAreaValue() //Custom hook to handle sending data to backend
-  const woofLimit = 250;
+  const {textAreaValue ,handleClick, handleChange} = useSendTextAreaValue() //Custom hook to handle sending data to backend
+  const WOOF_LIMIT = 250;
   const url = "http://localhost:3000/woofer"
   const date = new Date().toLocaleString()
   const data = {
@@ -19,8 +19,8 @@ export default function TextBox(props){
       <div className="arrow-up"></div>
       <div className="text-box">
         <textarea className="text-box__textarea" onChange={handleChange} value={textAreaValue} placeholder="Write your woof here..."/>
-        <button className="text-box__btn" onClick={() => handleClick(url, data, woofLimit)}>Submit Woof</button>
-        <CharCounter length={textLength} limit={woofLimit} style="foo" />
+        <button className="text-box__btn" onClick={() => handleClick(url, data, WOOF_LIMIT)}>Submit Woof</button>
+        <CharCounter className="char_counter--text-box" length={textAreaValue.length} limit={WOOF_LIMIT} />
       </div>
     </div>
   )
