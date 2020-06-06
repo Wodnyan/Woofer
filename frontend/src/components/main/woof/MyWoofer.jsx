@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Redirect} from "react-router-dom"
+import "./style/load-more.scss"
 import Content from "./Content.jsx"
 import Load from "../load/Load.jsx"
 import UserInfo from "../user_info/UserInfo.jsx"
@@ -63,7 +64,7 @@ export default function MyWoofer(props){
       <UserInfo username={props.username} />
       {woof.length === 0 && <NoContent />}
       {temp}
-      {hasNextPage && <button onClick={loadMore}>Load more</button>}
+      {hasNextPage && <button className="load-more-btn" onClick={loadMore}>Load more</button>}
     </>
   )
 }

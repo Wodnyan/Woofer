@@ -32,6 +32,9 @@ const PromptContainer = styled.div`
   width: 40%;
   text-align: center;
   background: #fff;
+  @media only screen and (max-width: 760px) {
+    width: 100%
+  }
 `;
 const Input = styled.input`
   width: 100%;
@@ -67,7 +70,7 @@ export default function DeleteUserPromp(props) {
           Make sure you want to do this.
         </p>
         <Input name="check" type="text" placeholder="Type in DELETE to confirm" onChange={e => setState(e.target.value)} value={state}></Input>
-        <Button cancel onClick={() => exit()}>
+        <Button onClick={() => exit()}>
           Cancel
         </Button>
         <Button state={state} onClick={handleDelete}>

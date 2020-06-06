@@ -22,3 +22,8 @@ ul{
 #root{
   height: 100%;
 }
+@media only screen and (min-height: 720px) {
+	body{
+		font-size: 14px;
+	}
+}

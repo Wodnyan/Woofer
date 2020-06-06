@@ -14,7 +14,6 @@ import MyWoofer from "./components/main/woof/MyWoofer.jsx"
 import NotFound from "./components/main/not_found/NotFound.jsx"
 import LandingPage from "./components/main/landing_page/LandingPage.jsx"
 import Settings from "./components/main/settings/Settings.jsx"
-//Make these values global so everything changes;
 const GlobalStyle = createGlobalStyle`
   :root{
     --main-color: ${props => props.theme.darkMode ? "#222629" : "#fff"};
@@ -52,7 +51,6 @@ function App() {
             return (
               <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>
                 <Header>
-                  {username}
                   <h1 className="header__title">Woofer</h1>
                   <Nav username={username} type={"All Woofs"} setAuth={setAuth} />
                 </Header>
@@ -65,7 +63,6 @@ function App() {
           <Route path="/woofer">
             <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>
               <Header>
-                {username}
                 <h1 className="header__title">Woofer</h1>
                 <Nav username={username} type={"My Woofs"} setAuth={setAuth} />
               </Header>
@@ -77,7 +74,6 @@ function App() {
           <Route path="/my-woofs">
             <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>
               <Header>
-                {username}
                 <h1 className="header__title">Woofer</h1>
                 <Nav username={username} type={"All Woofs"} setAuth={setAuth} />
               </Header>
