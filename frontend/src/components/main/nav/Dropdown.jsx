@@ -1,28 +1,14 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React from 'react';
+import useDetectClickOutside from "../../../hooks/useDetectClickOutside.jsx"
 import style from "./style/Dropdown.scss"
+
 export default function Dropdown(props){
   const {dropDownTitle} = props;
-  const [dropdown, setDropdown] = useState(false);
-  const dropdownRef = useRef(null);
-  const handleClick = ()=>{
-    setDropdown(!dropdown)
-  }
-  useEffect(() => {
-    const handle = (e) => {
-      if(dropdownRef.current && 
-        !dropdownRef.current.contains(e.target)){
-        setDropdown(!dropdown)
-      }
-    }
-    document.addEventListener("click", handle)
-    return () => {
-      document.removeEventListener("click", handle)
-    }
-  }, [dropdown])
+  const {ref, display, setDisplay} = useDetectClickOutside(false)
   return(
     <li className="dropdown-container" style={{position: "relative"}}>
-      <p className="dropdown__name" onClick={handleClick} style={{cursor: "pointer"}}>{dropDownTitle}</p>
-      {dropdown && <div className="dropdown__children" ref={dropdownRef} style={{position: "absolute"}}>{props.children}</div>}
+      <p className="dropdown__name" onClick={() => setDisplay(!display)} style={{cursor: "pointer"}}>{dropDownTitle}</p>
+      {display && <div className="dropdown__children" ref={ref} style={{position: "absolute"}}>{props.children}</div>}
     </li>
   )
 }
