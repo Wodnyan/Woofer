@@ -55,7 +55,7 @@ export default function MyWoofer(props){
   }
   //Change the name of this variable
   const temp = woof.map((ss)=>{
-    return <Content key={ss._id} woof={ss.woof} user={ss.user} postedOn={ss.postedOn}/>;
+    return <Content key={ss._id} woofId={ss._id} woof={ss.woof} user={ss.user} postedOn={ss.postedOn}/>;
   })
   if(redirect) return <Redirect exact to="/404"/>
   if(isLoading) return <Load />

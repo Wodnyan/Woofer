@@ -1,2 +1,2 @@
-module.exports = (io, server) => {
+module.exports = (io) => {
 }

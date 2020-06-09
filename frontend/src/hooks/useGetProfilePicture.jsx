@@ -10,6 +10,7 @@ export default function useGetProfilePicture(username) {
       .then(res => {
         if(res.data) setProfImg(`http://localhost:3000/${res.data}`)
       })
+
     return () => {
       source.cancel()
     }
