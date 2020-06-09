@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import "./style/load-more.scss"
 import Content from "./Content.jsx"
+import Woof from "./Woof.jsx"
 import Load from "../load/Load.jsx"
 import axios from "axios"
 
@@ -37,14 +38,12 @@ export default function AllWoofer(props){
     axios
       .get(`http://localhost:3000/api/woofer?from=${fromTo[0]}&to=${fromTo[1]}`)
       .then(resp => {
-        //If there's no more data to be loaded
-        //make the load more button invisible
         if(resp.data.length  < loadMoreBy) setHasNextPage(false)
         setWoof(prevState => woof.concat(resp.data))
       })
   }
   const temp = woof.map((ss)=>{
-    return <Content key={ss._id} woof={ss.woof} user={ss.user} postedOn={ss.postedOn}/>;
+    return <Woof key={ss._id} woofId={ss._id} woof={ss.woof} user={ss.user} postedOn={ss.postedOn}/>;
   })
   if(woof.length === 0) return <Load />
   else{
