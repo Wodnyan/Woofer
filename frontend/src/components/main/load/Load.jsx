@@ -9,3 +9,9 @@ export default function Load(props){
     </div>
   )
 }
+export function CircularLoader() {
+	return (
+		<div className="circular-loader">
+		</div>
+	)
+}
