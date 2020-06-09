@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Redirect} from "react-router-dom"
 import Load from "./main/load/Load.jsx"
-import axios, {CancelToken} from "axios"
+import axios from "axios"
 function displayLoader(auth, func) {
   func();
   return auth ? null : <Load />
@@ -11,7 +11,8 @@ export default function ProtectedComponent(props){
   const [redirect, setRedirect] = useState(false);
   //Props
   const {auth, setAuth, setUsername} = props;
-  const source = CancelToken.source();
+  const CancelToken = axios.CancelToken;
+  const source = CancelToken.source()
   const getToken = async () => {
     const url = "http://localhost:3000/user/check";
     const getData = await axios.post(url, {}, {withCredentials: true, cancelToken: source.token});
@@ -21,7 +22,7 @@ export default function ProtectedComponent(props){
     setAuth(verified);
   }
   useEffect(() => {
-    source.cancel();
+    source.cancel()
     return () => source.cancel()
   }, [])
   if(redirect) return  <Redirect to="/account/login"/>

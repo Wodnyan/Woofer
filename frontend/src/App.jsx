@@ -13,6 +13,7 @@ import MyWoofer from "./components/main/woof/MyWoofer.jsx"
 import NotFound from "./components/main/not_found/NotFound.jsx"
 import LandingPage from "./components/main/landing_page/LandingPage.jsx"
 import Settings from "./components/main/settings/Settings.jsx"
+
 const GlobalStyle = createGlobalStyle`
   :root{
     --main-color: ${props => props.theme.darkMode ? "#222629" : "#fff"};

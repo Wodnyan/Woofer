@@ -25,6 +25,7 @@ const upload = multer({
   }
 })
   .single("image")
+
 module.exports = (app)=>{
   //Post Profile Picture
   app.post("/upload/profile-picture", (req, res) => {
@@ -170,11 +171,14 @@ module.exports = (app)=>{
     }
     catch(err){
       const refreshToken = req.cookies.refreshToken;
+      //Change this 
       if(!refreshToken) return res.json({verified: false})
+      //Change this
       if(err.message === "invalid token") return deleteRefreshToken(refreshToken, res)
         //Extract this
         JWTRefresh.findOne({jwtToken: refreshToken}, (err, token) => {
           if(!token) {
+            //Change this
             return res.json({verified: false})
           }
           jwt.verify(token.jwtToken, process.env.REFRESH_TOKEN_SECRET, (err, data) => {

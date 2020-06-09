@@ -22,7 +22,7 @@ let server = app.listen(port, ()=>{
 	console.log(`Server is listening on port ${port}`)
 })
 //Socket
-handleSocket(io, server)
+handleSocket(io(server, {origins: "*:*"}))
 //Controllers
 woofController(app)
 userController(app)
