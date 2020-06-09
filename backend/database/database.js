@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 mongoose.connect("mongodb+srv://user:user@my-cluster-jv3bc.mongodb.net/woofer?retryWrites=true&w=majority",{useNewUrlParser:true, useUnifiedTopology: true},(err)=>{
-  if(err) console.error(err);
+  if(err) return console.error(err);
   console.log("Connected to Database");
 })
 mongoose.set('useFindAndModify', false);
@@ -9,6 +9,9 @@ const WoofSchema = new Schema({
   user: String,
   woof: String,
   postedOn: String,
+  comments: {
+    type: Array, "default": []
+  }
 })
 const UserSchema = new Schema({
   username: String,
