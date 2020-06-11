@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import useGetProfilePicture from "../../../hooks/useGetProfilePicture.jsx"
 import {Link} from "react-router-dom"
 import "./style/Content.scss"
 

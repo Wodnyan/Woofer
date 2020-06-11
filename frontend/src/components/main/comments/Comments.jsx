@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import Content from "../woof/Content.jsx"
+import CharCounter from "../char_counter/CharCounter.jsx"
+import {CircularLoader} from "../load/Load.jsx"
 import useSendTextAreaValue from "../../../hooks/useSendTextAreaValue.jsx"
-import useDetectClickOutside from "../../../hooks/useDetectClickOutside.jsx"
 //Import charcounter
 import "./Comments.scss"
 import axios from "axios"
@@ -10,10 +11,11 @@ export default function Comments({
 	innerRef
 }) {
 	const [comments, setComments] = useState([]);
-	const [loader, setLoader] = useState(true);
+	const [displayLoader, setDisplayLoader] = useState(true);
 	const {textAreaValue, handleClick, handleChange} = useSendTextAreaValue()
-	const COMMENT_LIMIT = 250;
-	const URL = "http://localhost:3000/api/comments"
+	const COMMENT_LIMIT = 150;
+	const ENDPOINT = "http://localhost:3000/api/comments"
+
 	//Fetch Comments
 	useEffect(() => {
 		const CancelToken = axios.CancelToken;
@@ -23,26 +25,35 @@ export default function Comments({
 				cancelToken:source.token
 			})
 			.then(resp => {
-				console.log(resp)
+				setDisplayLoader(false);
 				setComments(resp.data)
 			})
 		return () => {
 			return source.cancel()
 		}
 	}, [])
+
 	const comment = {
 		comment: textAreaValue,
 		postedOn: new Date().toLocaleString(),
 		woofId: woofId
 	}
+
+	const renderedComments = comments.map((comment, index) => {
+		return <Content key={index} woof={comment.comment} user={comment.username} postedOn={comment.postedOn}/>
+	})
+
 	return (
 		<div ref={innerRef} className="comments-container">
 			<input type="text" value={textAreaValue} onChange={(e) => handleChange(e)} placeholder="Write a comment"></input>
-			<button onClick={() => handleClick(URL, comment, COMMENT_LIMIT)}>Comment</button>
+			<button onClick={() => handleClick(ENDPOINT, comment, COMMENT_LIMIT)}>Comment</button>
+			<CharCounter 
+				length={textAreaValue.length} 
+				limit={COMMENT_LIMIT}
+			/>
 			<div className="comments">
-				{comments.map((comment, index) => {
-					return <Content key={index} woof={comment.comment} user={comment.username} postedOn={comment.postedOn}/>
-				})}
+				{!displayLoader && comments.length === 0 && "No comments" }
+				{displayLoader ? <CircularLoader /> : renderedComments}
 			</div>
 		</div>
 	)

@@ -1,20 +1,20 @@
 import React, {useState, useEffect} from 'react'
 import {Redirect} from "react-router-dom"
 import "./style/load-more.scss"
-import Content from "./Content.jsx"
-import Load from "../load/Load.jsx"
+import Woof from "./Woof.jsx"
+import Load, {CircularLoader} from "../load/Load.jsx"
 import UserInfo from "../user_info/UserInfo.jsx"
 import NoContent from "../no_content/NoContent.jsx"
 import axios from "axios"
 
 export default function MyWoofer(props){
-  const loadMoreBy = 50; //The amount of content to be loaded
+  const LOAD_MORE_BY = 50; //The amount of content to be loaded
   const {username} = props
   const [redirect, setRedirect] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [displayLoader, setDisplayLoader] = useState(false);
   //Load more State
   const [hasNextPage, setHasNextPage] = useState(true)
-  const [fromTo, setFromTo] = useState([0, loadMoreBy])
+  const [fromTo, setFromTo] = useState([0, LOAD_MORE_BY])
   //Data
   const [woof, setWoof] = useState([]);
   //Axios
@@ -27,10 +27,9 @@ export default function MyWoofer(props){
       })
       .then((resp) => {
         if(resp.data) {
-          if(resp.data.length < loadMoreBy - 1) setHasNextPage(false)
-          setIsLoading(false)
+          if(resp.data.length < LOAD_MORE_BY - 1) setHasNextPage(false)
           setWoof(resp.data)
-          setFromTo(prevState => [prevState[1] + 1, prevState[1] + loadMoreBy])
+          setFromTo(prevState => [prevState[1] + 1, prevState[1] + LOAD_MORE_BY])
         }
       })
       .catch((err) => {
@@ -45,25 +44,30 @@ export default function MyWoofer(props){
     }
   }, [])
   const loadMore = () => {
-    setFromTo(prevState => [prevState[1], prevState[1] + loadMoreBy])
+    setDisplayLoader(true)
+    setHasNextPage(false)
+    setFromTo(prevState => [prevState[1], prevState[1] + LOAD_MORE_BY])
     axios
       .get(`http://localhost:3000/api/woofer?username=${username}&from=${fromTo[0]}&to=${fromTo[1]}`)
       .then(resp => {
-        if(resp.data.length  < loadMoreBy - 1) setHasNextPage(false)
         setWoof(prevState => woof.concat(resp.data))
+        setHasNextPage(true)
+        setDisplayLoader(false)
+        if(resp.data.length  < LOAD_MORE_BY - 1) setHasNextPage(false)
       })
   }
   //Change the name of this variable
   const temp = woof.map((ss)=>{
-    return <Content key={ss._id} woofId={ss._id} woof={ss.woof} user={ss.user} postedOn={ss.postedOn}/>;
+    return <Woof key={ss._id} woofId={ss._id} woof={ss.woof} user={ss.user} postedOn={ss.postedOn}/>;
   })
   if(redirect) return <Redirect exact to="/404"/>
-  if(isLoading) return <Load />
+  if(woof.length === 0 && hasNextPage) return <Load />
   return (
     <>
       <UserInfo username={props.username} />
-      {woof.length === 0 && <NoContent />}
+      {woof.length === 0 && !hasNextPage && <NoContent />}
       {temp}
+      {displayLoader && <div className="load-more-circular-loader"><CircularLoader /></div>}
       {hasNextPage && <button className="load-more-btn" onClick={loadMore}>Load more</button>}
     </>
   )

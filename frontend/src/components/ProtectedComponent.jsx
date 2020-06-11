@@ -12,19 +12,24 @@ export default function ProtectedComponent(props){
   //Props
   const {auth, setAuth, setUsername} = props;
   const CancelToken = axios.CancelToken;
-  const source = CancelToken.source()
+  const source = CancelToken.source();
+
   const getToken = async () => {
     const url = "http://localhost:3000/user/check";
     const getData = await axios.post(url, {}, {withCredentials: true, cancelToken: source.token});
     const {verified, token, username} = getData.data;
     if(!verified) setRedirect(true)
-    setUsername(username);
-    setAuth(verified);
+    else {
+      setUsername(username);
+      setAuth(verified);
+    }
   }
+
   useEffect(() => {
     source.cancel()
     return () => source.cancel()
   }, [])
+
   if(redirect) return  <Redirect to="/account/login"/>
   else return (
     <>

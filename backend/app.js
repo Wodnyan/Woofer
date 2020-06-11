@@ -18,7 +18,7 @@ app.use(function(req, res, next) {
 app.use(express.json());
 app.use(cookieParser())
 //Server
-let server = app.listen(port, ()=>{
+const server = app.listen(port, ()=>{
 	console.log(`Server is listening on port ${port}`)
 })
 //Socket
