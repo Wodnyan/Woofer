@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import useGetProfilePicture from "../../../hooks/useGetProfilePicture.jsx"
 import style from "./UserInfo.scss"
 import axios from "axios"
 
