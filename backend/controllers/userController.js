@@ -1,6 +1,8 @@
 const {User, JWTRefresh} = require("../database/database.js");
+const cors = require("cors")
 const multer = require("multer");
 const {hash, compare} = require("bcrypt");
+const path = require("path")
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const saltRounds = 10;
@@ -57,16 +59,21 @@ module.exports = (app)=>{
       }
     })
   })
-  //Send Profile Picture Link
-  app.post("/user/profile-picture", (req, res) => {
-    const {username} = req.body;
+
+  app.get("/user/profile-picture", cors({origin: "*"}), (req, res) => {
+    const {username} = req.query;
+    if(!username) return res.sendStatus(404)
     User.findOne({username}, (err, data) => {
-      if(err) console.error(err)
-      if(!data) return res.send(null)
+      if(err) return console.log("Big OOF")
+      if(!data) return res.sendStatus(404)
       const {profilePicture} = data.userInfo;
-      return res.send(profilePicture);
+      if(!profilePicture) {return res.sendFile(path.resolve("public/uploads/astronaut.svg"))}
+      else {
+        return res.sendFile(path.resolve(profilePicture));
+      }
     })
   })
+
   //Delete User
   app.delete("/user/delete", (req, res) => {
     const token = req.cookies.token;
@@ -199,12 +206,17 @@ module.exports = (app)=>{
 function createToken(user){
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "30m"});
 }
+//Make this a Middleware
 function deleteRefreshToken(token, res) {
   JWTRefresh.deleteOne({jwtToken: token}, (err, data) => {
     if(err) console.error(err)
+    //TODO: Separate this into different function
     res.cookie("token", "", {expires: new Date(Date.now() + 100)})
     return res.json({verified: false});
   })
+}
+function deleteCookie(cookie) {
+  return res.cookie("token", "", {expires: new Date(Date.now() + 100)})
 }
 //Middleware to check for duplicate usernames
 function checkUserName(req, res, next){

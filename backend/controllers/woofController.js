@@ -53,18 +53,21 @@ module.exports = (app) => {
       }
       Woof.findOneAndUpdate({_id: req.body.woofId}, {$push: {comments: comment}}, (err, doc) => {
         if(err) return res.sendStatus(404);
-        console.log(doc)
+        return res.send("Comment successfully posted")
       })
     })
   })
 
   //Get Comments
   app.get("/api/comments", (req, res) => {
-    const {woofId} = req.query;
+    const {woofId, from, to} = req.query;
+    if(!woofId) return res.sendStatus(404);
+    //Test ID: 5edd1c66538b83206715c483
     Woof.findById(woofId, (err, data) => {
       if(err) return res.send([]);
       else if(!data) return res.sendStatus(404)
-      res.json(data.comments)
+      const slicedData = data.comments.slice(from, to);
+      res.json(slicedData)
     })
   })
 }
