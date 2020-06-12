@@ -1,4 +1,4 @@
-.load-more-btn{
+.button {
 	display: block;
 	margin: 20px auto 10px;
 	padding: .7em 4em;
@@ -12,8 +12,4 @@
 	&:hover{
 		background: transparent;
 	}
-}
-.load-more-circular-loader {
-	display: flex;
-	justify-content: center;
 }
