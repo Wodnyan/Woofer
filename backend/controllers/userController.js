@@ -43,8 +43,7 @@ module.exports = (app)=>{
           const {username} = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
           User.findOneAndUpdate({username: username}, {"userInfo.profilePicture": path}, (err, doc) => {
             if(err) console.error(err)
-            const path = doc.userInfo.profilePicture;
-            if(path){
+            if(doc.userInfo.profilePicture){
               fs.unlink(path, (err) => {
                 if(err) console.log(err)
                 console.log("Successfully deleted")
@@ -60,16 +59,16 @@ module.exports = (app)=>{
     })
   })
 
+  //Get Profile Picture
   app.get("/user/profile-picture", cors({origin: "*"}), (req, res) => {
     const {username} = req.query;
     if(!username) return res.sendStatus(404)
     User.findOne({username}, (err, data) => {
       if(err) return console.log("Big OOF")
       if(!data) return res.sendStatus(404)
-      const {profilePicture} = data.userInfo;
-      if(!profilePicture) {return res.sendFile(path.resolve("public/uploads/astronaut.svg"))}
+      else if(!data.userInfo.profilePicture) {return res.sendFile(path.resolve("public/uploads/astronaut.svg"))}
       else {
-        return res.sendFile(path.resolve(profilePicture));
+        return res.sendFile(path.resolve(data.userInfo.profilePicture));
       }
     })
   })
@@ -85,6 +84,7 @@ module.exports = (app)=>{
       res.send("Deleted Account")
     }) 
   })
+
   //Set User Descriptions
   app.post("/user/description", (req, res) => {
     const token = req.cookies.token;
@@ -95,6 +95,7 @@ module.exports = (app)=>{
       res.send("Description updated")
     })
   })
+
   //Get User Description
   app.get("/user/description", (req, res) => {
     const {username} = req.query;
@@ -108,6 +109,7 @@ module.exports = (app)=>{
       }
     })
   })
+
   //LOGIN
   app.post("/user/login", (req, res)=>{
       const {username, password} = req.body;
@@ -141,6 +143,7 @@ module.exports = (app)=>{
           }
       })
   })
+
   //REGISTER
   app.post("/user/signup", checkUserName, async (req, res)=>{
     const {username, password} = req.body;
@@ -162,8 +165,10 @@ module.exports = (app)=>{
     res.cookie("token", token, {httpOnly: true});
     res.json({user})
   })
+
   //Delete cookie on logout
   app.delete("/logout", (req, res) => deleteRefreshToken(req.cookies.refreshToken, res))
+
   //Check Auth
   app.post("/user/check", (req, res)=>{
     const token = req.cookies.token
@@ -178,9 +183,7 @@ module.exports = (app)=>{
     }
     catch(err){
       const refreshToken = req.cookies.refreshToken;
-      //Change this 
       if(!refreshToken) return res.json({verified: false})
-      //Change this
       if(err.message === "invalid token") return deleteRefreshToken(refreshToken, res)
         //Extract this
         JWTRefresh.findOne({jwtToken: refreshToken}, (err, token) => {
@@ -221,9 +224,9 @@ function deleteCookie(cookie) {
 //Middleware to check for duplicate usernames
 function checkUserName(req, res, next){
   const {username} = req.body;
-  User.findOne({username: username }, (err, foo)=>{
+  User.findOne({username: username }, (err, username)=>{
     if(err) console.error(err);
-    else if(foo === null) next();
+    else if(username === null) next();
     else{
       res.send({
         error: "Username Taken"
