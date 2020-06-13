@@ -28,6 +28,10 @@
       }
     }
   }
+  .load-more-circular-loader {
+    display: flex;
+    justify-content: center;
+  }
 }
 @media only screen and (max-width: 760px) {
   .woof-section{

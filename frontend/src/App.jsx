@@ -40,11 +40,14 @@ function App() {
       <GlobalStyle />
       <Router>
         <Switch>
+
           <Route exact path="/">
             <LandingPage />
           </Route>
+
           <Route exact path="/dev">
           </Route>
+
           <Route path="/user/:user" 
           component={(props) => {
             const {user} = props.match.params;
@@ -60,6 +63,7 @@ function App() {
               </ProtectedComponent>
             )
           }}/>
+
           <Route path="/woofer">
             <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>
               <header className="header">
@@ -71,6 +75,7 @@ function App() {
               </section>
             </ProtectedComponent>
           </Route>
+
           <Route path="/my-woofs">
             <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>
               <header className="header">
@@ -82,12 +87,15 @@ function App() {
               </section>
             </ProtectedComponent>
           </Route>
+
           <Route exact path="/account/sign-up">
             <SignUp setUsername={setUsername} username={username} auth={setAuth} />
           </Route>
+
           <Route exact path="/account/login">
             <Login setUsername={setUsername} username={username} auth={setAuth} />
           </Route>
+
           <Route exact path="/settings">
             <ProtectedComponent auth={auth} setAuth={setAuth} setUsername={setUsername}>
               <header className="header">

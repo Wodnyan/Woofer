@@ -23,6 +23,7 @@ export default function Comments({
 	useEffect(() => {
 		const CancelToken = axios.CancelToken;
 		const source = CancelToken.source()
+		console.log(comments)
 		axios
 			.get(`http://localhost:3000/api/comments?woofId=${woofId}&from=${fromTo[0]}&to=${fromTo[1]}`, {
 				cancelToken:source.token
@@ -38,12 +39,12 @@ export default function Comments({
 	}, [])
 
 	function loadMore() {
-    setFromTo(prevState => [prevState[1], prevState[1] + LOAD_MORE_BY])
-    axios
-    	.get(`http://localhost:3000/api/comments?woofId=${woofId}&from=${fromTo[0]}&to=${fromTo[1]}`)
-      .then(resp => {
-        setComments(prevState => [...prevState, ...resp.data]) 
-      })
+	    setFromTo(prevState => [prevState[1], prevState[1] + LOAD_MORE_BY])
+	    axios
+	    	.get(`http://localhost:3000/api/comments?woofId=${woofId}&from=${fromTo[0]}&to=${fromTo[1]}`)
+	      .then(resp => {
+	        setComments(prevState => [...prevState, ...resp.data]) 
+	      })
 	}
 
 	const comment = {

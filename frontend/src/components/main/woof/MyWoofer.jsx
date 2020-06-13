@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {Redirect} from "react-router-dom"
-import "./style/load-more.scss"
+import Button from "../button/Button.jsx"
 import Woof from "./Woof.jsx"
 import Load, {CircularLoader} from "../load/Load.jsx"
 import UserInfo from "../user_info/UserInfo.jsx"
@@ -50,7 +50,7 @@ export default function MyWoofer(props){
     axios
       .get(`http://localhost:3000/api/woofer?username=${username}&from=${fromTo[0]}&to=${fromTo[1]}`)
       .then(resp => {
-        setWoof(prevState => woof.concat(resp.data))
+        setWoof(prevState => [...prevState, ...resp.data])
         setHasNextPage(true)
         setDisplayLoader(false)
         if(resp.data.length  < LOAD_MORE_BY - 1) setHasNextPage(false)
@@ -68,7 +68,12 @@ export default function MyWoofer(props){
       {woof.length === 0 && !hasNextPage && <NoContent />}
       {temp}
       {displayLoader && <div className="load-more-circular-loader"><CircularLoader /></div>}
-      {hasNextPage && <button className="load-more-btn" onClick={loadMore}>Load more</button>}
+      {hasNextPage &&
+        <Button 
+          buttonText="Load More"
+          onClick={loadMore}
+        />
+      }
     </>
   )
 }
