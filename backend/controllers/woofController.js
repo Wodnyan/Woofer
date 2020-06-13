@@ -6,35 +6,41 @@ module.exports = (app) => {
   app.get("/api/woofer", async (req, res)=>{
     const {from, to, username} = req.query;
     if(username) {
-      const user = await User.findOne({username});
-      if(!user) return res.sendStatus(404)
-      const woofs = await Woof.find({user: username}, null, {sort: "-postedOn"});
-      const slicedData = woofs.slice(from, to);
-      return res.json(slicedData)
+      Woof
+        .find({user: username})
+        .sort("-postedOn")
+        .skip(parseInt(from))
+        .limit(to - from)
+        .exec((err, woofs) => {
+          if(err) console.log(err)
+          res.json(woofs)
+        })
     }
     else{
-      Woof.find({}, null, {sort: "-postedOn"},(err, data)=>{
-        if(err) console.error(err);
-        const slicedData = data.slice(from, to)
-        return res.json(slicedData);
-      })
+      Woof
+        .find({})
+        .sort("-postedOn")
+        .skip(parseInt(from))
+        .limit(to - from)
+        .exec((err, woofs) => {
+          if(err) console.log(err)
+          res.json(woofs)
+        })
     }
   })
 
   //Save Woofs
   app.post("/woofer", (req, res)=>{
-    //Secure this
     const {token} = req.cookies;
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, data) => {
       if(err) return res.sendStatus(401);
       else {
-        console.log(data)
+        console.log("Hurray")
       }
     })
     const {username, woof, postedOn} = req.body;
      new Woof({user: username, woof: woof, postedOn:  postedOn}).save((err)=>{
        if(err) console.error(err);
-       //Change this
        res.json({foo: "bar"})
        console.log("Woof saved");
      })
@@ -62,12 +68,16 @@ module.exports = (app) => {
   app.get("/api/comments", (req, res) => {
     const {woofId, from, to} = req.query;
     if(!woofId) return res.sendStatus(404);
-    //Test ID: 5edd1c66538b83206715c483
-    Woof.findById(woofId, (err, data) => {
-      if(err) return res.send([]);
-      else if(!data) return res.sendStatus(404)
-      const slicedData = data.comments.slice(from, to);
-      res.json(slicedData)
-    })
+    //Test ID: 5ee365aca35aba348ec07083   
+    Woof
+      .findById(woofId)
+      .skip(parseInt(from))
+      .limit(to - from)
+      .exec((err, comments) => {
+        if(err) res.sendStatus(404)
+        else {
+          res.json(comments.comments)
+        }
+      })
   })
 }
