@@ -3,13 +3,33 @@ import axios from "axios"
 
 export default function useLoadMore({
 	LOAD_MORE_BY=100,
-	setDisplayLoader,
-	URL
+	setDisplayLoader
 }) {
 	const [content, setContent] = useState([])
   const [hasNextPage, setHasNextPage] = useState(true)
   const [fromTo, setFromTo] = useState([0, LOAD_MORE_BY])
-  function loadMore() {
+  //Axios
+  const CancelToken = axios.CancelToken;
+  const source = CancelToken.source()
+
+  //Get initial load
+  useEffect(() => {
+    axios
+      .get(URL, {
+        cancelToken:source.token
+      })
+      .then(resp => {
+        console.log(resp)
+        setDisplayLoader(false);
+        setContent(resp.data)
+        setFromTo((prevState) => [prevState[1], prevState[1] + LOAD_MORE_BY])
+      })
+    return () => {
+      return source.cancel()
+    }
+  }, [])
+
+  function loadMore(URL) {
     setDisplayLoader(true)
     setHasNextPage(false)
     setFromTo(prevState => [prevState[1], prevState[1] + LOAD_MORE_BY])
@@ -22,5 +42,5 @@ export default function useLoadMore({
         if(resp.data.length  < LOAD_MORE_BY - 1) setHasNextPage(false)
       })	
   }
-	return {content, hasNextPage};
+	return {content, hasNextPage, loadMore};
 }

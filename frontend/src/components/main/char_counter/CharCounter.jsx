@@ -8,6 +8,5 @@ export default function CharCounter({
 	limit,
 	length
 }) {
-  const limitExcededError = length >= limit ? {color: "red"} : {color: "inherit"}
   return <CharCounterContainer className={className} length={length} limit={limit}>{length} / {limit}</CharCounterContainer>
 }

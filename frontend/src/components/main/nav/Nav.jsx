@@ -7,9 +7,12 @@ import Logout from "./Logout.jsx"
 import cogSvg from "./imgs/symbol.svg"
 import pawSvg from "./imgs/dog-paw.svg"
 
-export default function Nav(props){
-  const {setAuth, username} = props;
-  const path = props.type === "My Woofs" ? `/user/${username}` : "/woofer"
+export default function Nav({
+  setAuth,
+  username,
+  type
+}){
+  const path = type === "My Woofs" ? `/user/${username}` : "/woofer"
   return(
     <nav className="nav-container">
       <ul>
@@ -33,7 +36,7 @@ export default function Nav(props){
         </Dropdown>
         <li>
           <Link to={path} className="type-switch">
-            {props.type}
+            {type}
           </Link>
         </li>
       </ul>

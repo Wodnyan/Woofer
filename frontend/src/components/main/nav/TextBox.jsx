@@ -1,5 +1,6 @@
 import React from 'react';
 import "./style/TextBox.scss";
+import Button from "../button/Button.jsx"
 import useSendTextAreaValue from "../../../hooks/useSendTextAreaValue.jsx"
 import CharCounter from "../char_counter/CharCounter.jsx"
 import axios from "axios";

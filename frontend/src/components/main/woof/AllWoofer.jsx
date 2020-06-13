@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import "./style/load-more.scss"
 import Woof from "./Woof.jsx"
+import Button from "../button/Button.jsx"
 import Load, {CircularLoader} from "../load/Load.jsx"
 import axios from "axios"
 
@@ -40,7 +40,7 @@ export default function AllWoofer(props){
     axios
       .get(`http://localhost:3000/api/woofer?from=${fromTo[0]}&to=${fromTo[1]}`)
       .then(resp => {
-        setWoof(prevState => woof.concat(resp.data))
+        setWoof(prevState => [...prevState, ...resp.data]) 
         setHasNextPage(true)
         setDisplayLoader(false)
         if(resp.data.length  < LOAD_MORE_BY - 1) setHasNextPage(false)
@@ -55,7 +55,12 @@ export default function AllWoofer(props){
       <>
         {temp}
         {displayLoader && <div className="load-more-circular-loader"><CircularLoader /></div>}
-        {hasNextPage && <button className="load-more-btn" onClick={loadMore}>Load more</button>}
+        {hasNextPage &&
+          <Button 
+            buttonText="Load More"
+            onClick={loadMore}
+          />
+        }
       </>
     )
   }
