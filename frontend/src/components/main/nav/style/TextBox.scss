@@ -8,6 +8,7 @@
   }
   .char_counter--text-box {
     margin-top: -1em;
+    color: var(--main-text-color);
   }
   .text-box__textarea{
     resize: none;
@@ -19,7 +20,7 @@
     font-size: 1.2em;
   }
   .text-box__btn{
-    background: $yellow;
+    background: var(--tertiary-color);
     color: #fff;
     padding: .8em 2em;
     border: 2px solid var(--tertiary-color);

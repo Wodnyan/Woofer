@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import "./style/Settings.scss"
 import Description from "./Description.jsx"
 import ExpandingCard from "../expanding_card/ExpandingCard.jsx"
 import SwitchSlider from "../switch/Switch.jsx"
@@ -19,7 +20,7 @@ function Settings(props){
         <Description />
       </ExpandingCard>
       <ExpandingCard cardName={"Light Mode"}>
-        <h1>Switch to light mode</h1>
+        <h1 className="switch-color-modes-text">Switch to light mode</h1>
         <SwitchSlider handleClick={handleClick} defaultValue={darkMode}/>
       </ExpandingCard>
       <ExpandingCard cardName={"Profile picture"}>
