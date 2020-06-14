@@ -31,7 +31,7 @@
         border-radius: 1em;
         text-decoration: none;
         font-size: inherit;
-        color: var(--main-text-color);
+        color: #fff;
         background-color: var(--secondary-color);
       }
     }
@@ -92,6 +92,9 @@
       }
     }
   }
+}
+.type-switch {
+
 }
 
 @media only screen and (min-width: 3000px) {

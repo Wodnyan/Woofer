@@ -19,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
     --main-color: ${props => props.theme.darkMode ? "#222629" : "#fff"};
     --main-text-color: ${props => props.theme.darkMode ? "#fff" : "#000" };
     --secondary-color: ${props => props.theme.darkMode ? "#61892f" : "#3b5998"};
-    --tertiary-color: #86c232
+    --tertiary-color: ${props => props.theme.darkMode ? "#86c232" : "#add8e6"};
   }
   body{
     background-color: var(--main-color);
