@@ -9,11 +9,10 @@ export default function Woof({
 	woofId
 }) {
 
-	const [displayComments, setDisplayComments] = useState(false);
 	const {ref, display, setDisplay} = useDetectClickOutside(false)
 	return (
 		<>
-			{display && <Comments innerRef={ref} woofId={woofId} />}
+			{display && <Comments innerRef={ref} woofId={woofId} closeComments={() => setDisplay(false)}/>}
 			<Content 
 				woof={woof} 
 				user={user} 

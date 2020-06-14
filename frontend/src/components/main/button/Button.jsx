@@ -1,9 +1,25 @@
-import React from "react"
+import React, {useState} from "react"
 import "./Button.scss"
 
 export default function Button({
 	onClick,
 	buttonText
 }) {
-	return <button className="button" onClick={onClick}>{buttonText}</button> 
+	const [bounce, setBounce] = useState(false)
+	function handleClick() {
+		setBounce(true)
+	}
+	function handleAnimationEnd() {
+		setBounce(false)
+		onClick()
+	}
+	return (
+		<button 
+			onClick={handleClick}
+			onAnimationEnd={handleAnimationEnd}
+			className={bounce ? "button bounce" : "button"}
+		>
+			{buttonText}
+		</button> 
+	)
 }

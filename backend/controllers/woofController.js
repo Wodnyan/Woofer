@@ -69,14 +69,15 @@ module.exports = (app) => {
     const {woofId, from, to} = req.query;
     if(!woofId) return res.sendStatus(404);
     //Test ID: 5ee365aca35aba348ec07083   
+    //Quickfix
     Woof
       .findById(woofId)
-      .skip(parseInt(from))
-      .limit(to - from)
-      .exec((err, comments) => {
-        if(err) res.sendStatus(404)
+      .select("comments -_id")
+      .exec((err, data) => {
+        if(err) console.error(err)
         else {
-          res.json(comments.comments)
+          const slicedData = data.comments.slice(from, to)
+          res.json(slicedData)
         }
       })
   })

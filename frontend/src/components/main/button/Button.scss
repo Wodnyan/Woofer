@@ -8,8 +8,24 @@
 	background: var(--secondary-color);
 	color: var(--main-text-color);
 	cursor: pointer;
-	transition: background .2s ease;
+	transition: background .2s ease; 
 	&:hover{
 		background: transparent;
+	}
+}
+.bounce {
+	animation-duration: .7s;
+	animation-timing-function: ease;
+	animation-name: bounce;
+}
+@keyframes bounce {
+	from {
+		transform: scale(.5);
+	}
+	50% {
+		transform: scale(1.1);
+	}
+	to {
+		transform: scale(1) ;
 	}
 }

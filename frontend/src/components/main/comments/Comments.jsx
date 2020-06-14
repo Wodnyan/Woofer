@@ -9,12 +9,15 @@ import "./Comments.scss"
 import axios from "axios"
 export default function Comments({
 	woofId,
-	innerRef
+	innerRef,
+	closeComments
 }) {
 	const LOAD_MORE_BY = 4;
-	const [fromTo, setFromTo] = useState([0, LOAD_MORE_BY])
 	const [comments, setComments] = useState([]);
 	const [displayLoader, setDisplayLoader] = useState(true);
+	const [loadMoreLoader, setLoadMoreLoader] = useState(false);
+	const [fromTo, setFromTo] = useState([0, LOAD_MORE_BY])
+	const [hasNextPage, setHasNextPage] = useState(true);
 	const {textAreaValue, handleClick, handleChange} = useSendTextAreaValue()
 	const COMMENT_LIMIT = 150;
 	const POST_ENDPOINT = "http://localhost:3000/api/comments"
@@ -23,13 +26,13 @@ export default function Comments({
 	useEffect(() => {
 		const CancelToken = axios.CancelToken;
 		const source = CancelToken.source()
-		console.log(comments)
 		axios
 			.get(`http://localhost:3000/api/comments?woofId=${woofId}&from=${fromTo[0]}&to=${fromTo[1]}`, {
 				cancelToken:source.token
 			})
 			.then(resp => {
-				setDisplayLoader(prev => [prev[1], prev[1] + LOAD_MORE_BY])
+				if(resp.data.length < LOAD_MORE_BY - 1) setHasNextPage(false)
+				setFromTo(prev => [prev[1], prev[1] + LOAD_MORE_BY])
 				setDisplayLoader(false);
 				setComments(resp.data)
 			})
@@ -40,10 +43,13 @@ export default function Comments({
 
 	function loadMore() {
 	    setFromTo(prevState => [prevState[1], prevState[1] + LOAD_MORE_BY])
+	    setLoadMoreLoader(true)
 	    axios
 	    	.get(`http://localhost:3000/api/comments?woofId=${woofId}&from=${fromTo[0]}&to=${fromTo[1]}`)
 	      .then(resp => {
+					if(resp.data.length < LOAD_MORE_BY) setHasNextPage(false)
 	        setComments(prevState => [...prevState, ...resp.data]) 
+			    setLoadMoreLoader(false)
 	      })
 	}
 
@@ -59,16 +65,20 @@ export default function Comments({
 
 	return (
 		<div ref={innerRef} className="comments-container">
-			<input type="text" value={textAreaValue} onChange={(e) => handleChange(e)} placeholder="Write a comment"></input>
-			<button onClick={() => handleClick(POST_ENDPOINT, comment, COMMENT_LIMIT)}>Comment</button>
-			<CharCounter 
-				length={textAreaValue.length} 
-				limit={COMMENT_LIMIT}
-			/>
+			<button className="comments-close-btn" onClick={closeComments}>Close</button>
+			<div className="comments-input">
+				<input type="text" value={textAreaValue} onChange={(e) => handleChange(e)} placeholder="Write a comment"></input>
+				<button onClick={() => handleClick(POST_ENDPOINT, comment, COMMENT_LIMIT)}>Comment</button>
+				<CharCounter 
+					length={textAreaValue.length} 
+					limit={COMMENT_LIMIT}
+				/>
+			</div>
 			<div className="comments">
 				{!displayLoader && comments.length === 0 && "No comments"}
 				{displayLoader ? <CircularLoader /> : renderedComments}
-				{!displayLoader && <Button buttonText="Load More" onClick={loadMore} />}
+				{loadMoreLoader && <CircularLoader />}
+				{!displayLoader && hasNextPage && <Button buttonText="Load More" onClick={loadMore} />}
 			</div>
 		</div>
 	)
